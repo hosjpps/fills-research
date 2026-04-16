@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ФИЛЛС — Исследование и стратегия запуска</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: #111118;
+            --bg-secondary: #18181f;
+            --bg-card: #1e1e28;
+            --bg-card-hover: #262630;
+            --border: rgba(255,255,255,0.08);
+            --text-primary: #f5f5fa;
+            --text-secondary: #9999b0;
+            --text-muted: #666680;
+            --accent-coral: #ff6b6b;
+            --accent-purple: #a855f7;
+            --accent-yellow: #fbbf24;
+            --accent-green: #34d399;
+            --accent-blue: #60a5fa;
+            --accent-pink: #f472b6;
+            --accent-orange: #fb923c;
+            --gradient-hero: linear-gradient(135deg, #ff8a8a 0%, #c084fc 40%, #93c5fd 100%);
+            --gradient-warm: linear-gradient(135deg, #ff8a8a 0%, #fcd34d 100%);
+            --gradient-cool: linear-gradient(135deg, #c084fc 0%, #93c5fd 100%);
+            --gradient-mint: linear-gradient(135deg, #6ee7b7 0%, #93c5fd 100%);
+            --gradient-sunset: linear-gradient(135deg, #fdba74 0%, #f9a8d4 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #333 transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ===== GRAIN OVERLAY ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.35;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 2rem;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(17, 17, 24, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-glow-1 { background: #ff8a8a; top: -200px; left: -200px; }
+        .hero-glow-2 { background: #c084fc; bottom: -200px; right: -200px; animation-delay: -10s; }
+        .hero-glow-3 { background: #93c5fd; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; opacity: 0.12; animation-delay: -5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            color: var(--accent-purple);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-purple);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 700;
+            letter-spacing: 8px;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-stat { text-align: center; }
+
+        .hero-stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.25rem;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-hero);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover .card-glow { opacity: 1; }
+
+        /* ===== MARKET ===== */
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+        }
+
+        .metric-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .metric-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .metric-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            margin-top: 0.75rem;
+        }
+
+        .metric-trend.up {
+            background: rgba(52, 211, 153, 0.1);
+            color: var(--accent-green);
+        }
+
+        /* ===== POSITIONING MAP ===== */
+        .positioning-section {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 2rem auto;
+            aspect-ratio: 1.3;
+        }
+
+        /* ===== PRICE SEGMENTS ===== */
+        .price-segments {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .price-segment {
+            display: grid;
+            grid-template-columns: 120px 1fr 200px;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+
+        .price-segment.active {
+            border-color: rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .price-segment-name { font-weight: 600; font-size: 0.9rem; }
+
+        .price-bar-wrapper {
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .price-bar {
+            height: 100%;
+            border-radius: 100px;
+        }
+
+        .price-segment-brands { font-size: 0.8rem; color: var(--text-secondary); }
+
+        /* ===== COMPETITORS ===== */
+        .competitors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .competitor-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .competitor-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .competitor-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .competitor-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .competitor-price-tag {
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+        }
+
+        .competitor-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .competitor-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .competitor-strength-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 100px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .competitor-strength-fill {
+            height: 100%;
+            border-radius: 100px;
+        }
+
+        .competitor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .competitor-tag {
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+        }
+
+        .competitor-tag.strength {
+            background: rgba(52, 211, 153, 0.1);
+            color: var(--accent-green);
+        }
+
+        .competitor-tag.weakness {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent-coral);
+        }
+
+        .competitor-insight {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 1rem;
+            background: rgba(168, 85, 247, 0.05);
+            border-left: 2px solid var(--accent-purple);
+            border-radius: 0 8px 8px 0;
+            margin-top: 1rem;
+        }
+
+        .competitor-insight strong { color: var(--accent-purple); }
+
+        /* ===== DESIGN ===== */
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .design-technique {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .design-technique-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+        }
+
+        .design-technique h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .design-technique p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .cost-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--accent-yellow);
+            margin-top: 0.75rem;
+        }
+
+        /* ===== CAN MOCKUPS ===== */
+        .cans-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .can-mockup {
+            text-align: center;
+            position: relative;
+        }
+
+        .can-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .can-photo:hover { transform: scale(1.03) translateY(-5px); }
+
+        .can-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .can-flavor-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+        .can-emotion { font-size: 0.75rem; color: var(--text-muted); font-style: italic; }
+
+        /* ===== SKU ===== */
+        .sku-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sku-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sku-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.1); }
+
+        .sku-gradient-bar { height: 4px; width: 100%; }
+        .sku-content { padding: 1.75rem; }
+
+        .sku-role {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+        }
+
+        .sku-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .sku-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; }
+
+        .sku-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .sku-meta-item { font-size: 0.8rem; color: var(--text-muted); }
+        .sku-meta-item strong { color: var(--text-secondary); }
+
+        .sku-share {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sku-share-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .sku-share-fill { height: 100%; border-radius: 100px; }
+
+        .sku-share-label { font-size: 0.75rem; font-weight: 600; min-width: 45px; text-align: right; }
+
+        /* ===== ECONOMICS ===== */
+        .economics-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cost-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cost-item:last-child { border-bottom: none; }
+        .cost-item-name { font-size: 0.9rem; color: var(--text-secondary); }
+
+        .cost-item-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+
+        .cost-item.total {
+            border-top: 2px solid var(--accent-purple);
+            padding-top: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .cost-item.total .cost-item-name,
+        .cost-item.total .cost-item-value {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-purple), var(--accent-blue), var(--accent-green), var(--accent-yellow));
+            border-radius: 1px;
+        }
+
+        .timeline-item { position: relative; padding-bottom: 3rem; }
+        .timeline-item:last-child { padding-bottom: 0; }
+
+        .timeline-dot {
+            position: absolute;
+            left: -3rem;
+            top: 0.3rem;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 3px solid var(--bg-primary);
+            transform: translateX(-6px);
+        }
+
+        .timeline-phase {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-tasks { display: flex; flex-direction: column; gap: 0.4rem; }
+
+        .timeline-task {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .timeline-task::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        /* ===== GAPS ===== */
+        .gaps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gap-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gap-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .gap-card:nth-child(1)::before { background: var(--gradient-hero); }
+        .gap-card:nth-child(2)::before { background: var(--gradient-cool); }
+        .gap-card:nth-child(3)::before { background: var(--gradient-mint); }
+        .gap-card:nth-child(4)::before { background: var(--gradient-warm); }
+        .gap-card:nth-child(5)::before { background: var(--gradient-sunset); }
+        .gap-card:nth-child(6)::before { background: linear-gradient(135deg, #f472b6, #a855f7); }
+
+        .gap-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .gap-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .gap-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+
+        /* ===== CHECKLIST ===== */
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checklist-item:hover { background: var(--bg-card-hover); }
+
+        .checklist-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid var(--text-muted);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item:hover .checklist-check { border-color: var(--accent-purple); }
+
+        .checklist-item.checked .checklist-check {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .checklist-item.checked { opacity: 0.6; }
+
+        .check-svg { display: none; }
+        .checklist-item.checked .check-svg { display: block; }
+
+        /* ===== TRENDS ===== */
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .trend-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+        }
+
+        .trend-icon { margin-bottom: 1rem; }
+        .trend-icon svg { width: 32px; height: 32px; }
+        .trend-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .trend-card p { font-size: 0.85rem; color: var(--text-secondary); }
+
+        /* ===== INSIGHT BOX ===== */
+        .insight-box {
+            background: rgba(168, 85, 247, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .insight-box h4 {
+            color: var(--accent-purple);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-box p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        /* ===== TABLE ===== */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 2rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 1rem 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table th:first-child { border-radius: 12px 0 0 0; }
+        .data-table th:last-child { border-radius: 0 12px 0 0; }
+
+        .data-table td {
+            padding: 1rem 1.25rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        .data-table tr:last-child td:first-child { border-radius: 0 0 0 12px; }
+        .data-table tr:last-child td:last-child { border-radius: 0 0 12px 0; }
+        .data-table tr:hover td { background: var(--bg-card); }
+
+        /* ===== ANTI FLAVORS ===== */
+        .antivkus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .antivkus-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 107, 107, 0.04);
+            border: 1px solid rgba(255, 107, 107, 0.1);
+            border-radius: 12px;
+        }
+
+        .antivkus-x { color: var(--accent-coral); font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+        .antivkus-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+        .antivkus-reason { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* ===== PRICE CHAIN ===== */
+        .price-chain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .price-chain-step {
+            text-align: center;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            min-width: 150px;
+        }
+
+        .price-chain-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .price-chain-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+        .price-chain-arrow { font-size: 1.5rem; color: var(--text-muted); padding: 0 0.5rem; }
+
+        /* ===== REGULATION ===== */
+        .reg-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .reg-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .reg-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .reg-item h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .reg-item p { font-size: 0.8rem; color: var(--text-secondary); }
+
+        /* ===== BIG QUOTE ===== */
+        .big-quote {
+            text-align: center;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .big-quote blockquote {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 600;
+            line-height: 1.4;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ===== WAVE CARDS ===== */
+        .wave-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .wave-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+        }
+
+        .wave-card h4 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .wave-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+
+        .wave-card li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .wave-card li::before {
+            content: '+';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: 700;
+        }
+
+        /* ===== CHANNELS ===== */
+        .channels-timeline { display: grid; gap: 2rem; }
+
+        .channel-phase {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .channel-phase-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+
+        .channel-phase-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .channel-phase-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .channel-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .channel-item {
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .channel-item strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.15rem;
+        }
+
+        /* ===== PHOTO PLACEHOLDERS ===== */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 3rem;
+        }
+
+        .photo-placeholder {
+            aspect-ratio: 4/3;
+            border-radius: 16px;
+            border: 2px dashed rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: rgba(255,255,255,0.02);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-placeholder:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.03);
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+        }
+
+        .photo-placeholder-icon {
+            opacity: 0.3;
+        }
+        .photo-placeholder-icon svg { width: 36px; height: 36px; }
+
+        .photo-placeholder-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .photo-placeholder.hero-photo {
+            aspect-ratio: 16/7;
+            grid-column: span 3;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 6px;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-tagline { color: var(--text-muted); font-size: 0.85rem; }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 960px) {
+            .gaps-grid, .design-grid, .reg-grid { grid-template-columns: repeat(2, 1fr); }
+            .photo-grid { grid-template-columns: repeat(2, 1fr); }
+            .photo-placeholder.hero-photo { grid-column: span 2; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .cans-showcase { grid-template-columns: repeat(2, 1fr); }
+            .competitors-grid { grid-template-columns: 1fr; }
+            .gaps-grid, .design-grid, .reg-grid { grid-template-columns: 1fr; }
+            .photo-grid { grid-template-columns: 1fr; }
+            .photo-placeholder.hero-photo { grid-column: span 1; }
+            .price-segment { grid-template-columns: 100px 1fr; }
+            .price-segment-brands { display: none; }
+            .section { padding: 4rem 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+    <div class="nav-inner">
+        <div class="nav-logo">ФИЛЛС</div>
+        <ul class="nav-links">
+            <li><a href="#market">Рынок</a></li>
+            <li><a href="#competitors">Конкуренты</a></li>
+            <li><a href="#design">Дизайн</a></li>
+            <li><a href="#lineup">Линейка</a></li>
+            <li><a href="#economics">Экономика</a></li>
+            <li><a href="#roadmap">Дорожная карта</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-glow hero-glow-3"></div>
+
+    <div class="hero-badge">Исследование и стратегия запуска</div>
+    <h1>ФИЛЛС</h1>
+    <p class="hero-subtitle">Газированные лимонады от завода ЛыткаринЪ. Крафтовый дизайн по цене масс-маркета. Пустая ниша на рынке РФ.</p>
+
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="hero-stat-value">6</div>
+            <div class="hero-stat-label">SKU на старте</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-value">55-90</div>
+            <div class="hero-stat-label">Руб. за банку</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-value">330</div>
+            <div class="hero-stat-label">мл / банка</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-value">2-3.5</div>
+            <div class="hero-stat-label">Млн руб. старт</div>
+        </div>
+    </div>
+</section>
+
+<!-- KEY INSIGHT -->
+<div class="big-quote fade-in">
+    <blockquote>Банка за 60-80 руб. выглядит и ощущается на 150+. Дизайн уровня Holy Water по цене Добрый. Это главный трюк.</blockquote>
+</div>
+
+<!-- ==================== РЫНОК ==================== -->
+<section class="section" id="market">
+    <div class="section-header fade-in">
+        <div class="section-tag">Анализ рынка</div>
+        <h2 class="section-title">Рынок лимонадов РФ</h2>
+        <p class="section-desc">Объём, структура, тренды и окно возможностей для входа нового бренда</p>
+    </div>
+
+    <div class="market-grid fade-in">
+        <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(96, 165, 250, 0.1);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+            <div class="metric-value" style="color: var(--accent-blue);">~6.5-7</div>
+            <div class="metric-label">Млрд литров — объём рынка</div>
+            <div class="metric-trend up">+3-5% в год</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(52, 211, 153, 0.1);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg></div>
+            <div class="metric-value" style="color: var(--accent-green);">450-520</div>
+            <div class="metric-label">Млрд руб. — в розничных ценах</div>
+            <div class="metric-trend up">Растёт</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(251, 191, 36, 0.1);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
+            <div class="metric-value" style="color: var(--accent-yellow);">60-75</div>
+            <div class="metric-label">Руб. — средняя цена банки 330 мл</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(168, 85, 247, 0.1);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="metric-value" style="color: var(--accent-purple);">2022+</div>
+            <div class="metric-label">Coca-Cola & PepsiCo ушли — окно открыто</div>
+        </div>
+    </div>
+
+    <!-- TRENDS -->
+    <div style="margin-top: 4rem;">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.5rem; margin-bottom: 2rem;" class="fade-in">Тренды 2025-2026</h3>
+        <div class="trends-grid fade-in">
+            <div class="trend-card">
+                <div class="trend-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66L12 14"/><path d="M2 12s4-4 8-4c6 0 8 6 8 6"/></svg></div>
+                <h4>Натуральность</h4>
+                <p>Отказ от искусственных красителей и ароматизаторов. "На натуральном сахаре" — ключевой триггер покупки.</p>
+            </div>
+            <div class="trend-card">
+                <div class="trend-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg></div>
+                <h4>Low Sugar</h4>
+                <p>15-20% рынка — версии без сахара. Акциз на сахар (7 руб./л при >5 г/100 мл) стимулирует производителей.</p>
+            </div>
+            <div class="trend-card">
+                <div class="trend-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+                <h4>Необычные вкусы</h4>
+                <p>Ботанические: базилик, лаванда, розмарин. Пряные: имбирь, куркума. Региональные: облепиха, иван-чай.</p>
+            </div>
+            <div class="trend-card">
+                <div class="trend-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+                <h4>Упаковка</h4>
+                <p>Минимализм для премиума. Матовый лак как маркер качества. Slim-банки набирают популярность.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЦЕНОВЫЕ СЕГМЕНТЫ -->
+    <div style="margin-top: 4rem;" class="fade-in">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.5rem; margin-bottom: 0.75rem;">Где ФИЛЛС на ценовой карте</h3>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Цена как у Добрый/Laimon Fresh, дизайн как у Holy Water</p>
+
+        <div class="price-segments">
+            <div class="price-segment">
+                <div class="price-segment-name" style="color: var(--text-muted);">Эконом</div>
+                <div class="price-bar-wrapper"><div class="price-bar" style="width: 25%; background: rgba(255,255,255,0.15);"></div></div>
+                <div class="price-segment-brands">30-55 руб. &middot; СТМ сетей</div>
+            </div>
+            <div class="price-segment active">
+                <div class="price-segment-name" style="color: var(--accent-purple);">Средний &#9733;</div>
+                <div class="price-bar-wrapper"><div class="price-bar" style="width: 65%; background: var(--gradient-cool);"></div></div>
+                <div class="price-segment-brands">55-90 руб. &middot; <strong style="color: var(--accent-purple);">ФИЛЛС здесь</strong></div>
+            </div>
+            <div class="price-segment">
+                <div class="price-segment-name" style="color: var(--text-muted);">Средний+</div>
+                <div class="price-bar-wrapper"><div class="price-bar" style="width: 40%; background: rgba(255,255,255,0.15);"></div></div>
+                <div class="price-segment-brands">90-130 руб. &middot; Ascania, Borjomi</div>
+            </div>
+            <div class="price-segment">
+                <div class="price-segment-name" style="color: var(--text-muted);">Премиум</div>
+                <div class="price-bar-wrapper"><div class="price-bar" style="width: 20%; background: rgba(255,255,255,0.15);"></div></div>
+                <div class="price-segment-brands">130-200 руб. &middot; Holy Water, Fever-Tree</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POSITIONING CHART -->
+    <div class="positioning-section fade-in" style="margin-top: 3rem;">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.5rem; margin-bottom: 0.5rem;">Карта позиционирования</h3>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Цена vs. Дизайн — где пустая ниша</p>
+        <div class="chart-container">
+            <canvas id="positioningChart"></canvas>
+        </div>
+        <div class="insight-box" style="margin-top: 1.5rem;">
+            <h4>Ключевой инсайт</h4>
+            <p>Ни один бренд в диапазоне 55-90 руб. не делает минималистичный/градиентный дизайн. Все либо перегружены (фрукты, блики), либо ретро. ФИЛЛС займёт пустую нишу: <strong style="color: var(--text-primary);">современный дизайн по массовой цене.</strong></p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== КОНКУРЕНТЫ ==================== -->
+<section class="section" id="competitors">
+    <div class="section-header fade-in">
+        <div class="section-tag">Конкурентный анализ</div>
+        <h2 class="section-title">Глубокий разбор конкурентов</h2>
+        <p class="section-desc">10 ключевых игроков рынка: цены, дизайн, каналы, слабые места</p>
+    </div>
+
+    <div class="competitors-grid fade-in">
+        <!-- ДОБРЫЙ -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Добрый</div>
+                <div class="competitor-price-tag">55-75 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>Multon Partners (ex Coca-Cola)</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>10+ SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 90%; background: var(--gradient-warm);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 5/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Тотальное присутствие</span>
+                <span class="competitor-tag strength">Логистика Coca-Cola</span>
+                <span class="competitor-tag strength">Низкая цена</span>
+                <span class="competitor-tag weakness">Нет идентичности</span>
+                <span class="competitor-tag weakness">"Подделка" Coca-Cola</span>
+                <span class="competitor-tag weakness">Дизайн без характера</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> уникальное позиционирование (крафт, завод с историей), авторские вкусы, молодёжная аудитория, которая не хочет "бабушкину газировку"</div>
+        </div>
+
+        <!-- ЧЕРНОГОЛОВКА -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Черноголовка</div>
+                <div class="competitor-price-tag">60-80 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>ЗАО Аквалайф, 1942</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>14+ SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 80%; background: var(--gradient-mint);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 4/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Русская идентичность</span>
+                <span class="competitor-tag strength">Натуральный состав</span>
+                <span class="competitor-tag strength">Стекло = премиум</span>
+                <span class="competitor-tag weakness">Ретро отпугивает молодёжь</span>
+                <span class="competitor-tag weakness">Слабый дизайн банок</span>
+                <span class="competitor-tag weakness">Нет модных вкусов</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> ФИЛЛС = "Черноголовка для зумеров" — натуральный, с историей, но стильный</div>
+        </div>
+
+        <!-- LAIMON FRESH -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Laimon Fresh</div>
+                <div class="competitor-price-tag">65-85 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>Контрактное пр-во</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>5-6 SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 60%; background: var(--accent-green);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 3/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Чёткое позиционирование</span>
+                <span class="competitor-tag strength">Узнаваемый вкус</span>
+                <span class="competitor-tag weakness">Один ключевой вкус</span>
+                <span class="competitor-tag weakness">Латиница — риск</span>
+                <span class="competitor-tag weakness">Нет истории и глубины</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> 6 вкусов с характером + история + натуральность vs один вкус без глубины</div>
+        </div>
+
+        <!-- FANTOLA -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Fantola</div>
+                <div class="competitor-price-tag">55-75 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>Российский бренд, 2019</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>8-10 SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 65%; background: var(--gradient-sunset);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 3/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Попадание в молодёжь</span>
+                <span class="competitor-tag strength">Креативный маркетинг</span>
+                <span class="competitor-tag strength">Hype-стратегия</span>
+                <span class="competitor-tag weakness">Ощущение "химии"</span>
+                <span class="competitor-tag weakness">Аудитория 25+ не берёт</span>
+                <span class="competitor-tag weakness">Вкус не оправдывает</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> ФИЛЛС забирает тех, кто "вырос" из Fantola — стильный + качественный + натуральный</div>
+        </div>
+
+        <!-- FRUSTYLE -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Frustyle</div>
+                <div class="competitor-price-tag">55-70 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>Бывш. PepsiCo</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>5-6 SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 35%; background: rgba(255,255,255,0.2);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 2/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">База PepsiCo</span>
+                <span class="competitor-tag weakness">Нет идентичности</span>
+                <span class="competitor-tag weakness">Слабый маркетинг</span>
+                <span class="competitor-tag weakness">Нет эмоциональной связи</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> Легко — Frustyle не имеет лояльной аудитории. Любой бренд с внятным позиционированием выигрывает</div>
+        </div>
+
+        <!-- BORJOMI -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Borjomi Flavored</div>
+                <div class="competitor-price-tag">85-120 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>IDS Borjomi, Грузия</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>4 SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 75%; background: var(--gradient-cool);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 4/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Премиальность</span>
+                <span class="competitor-tag strength">Узнаваемость Borjomi</span>
+                <span class="competitor-tag weakness">Высокая цена</span>
+                <span class="competitor-tag weakness">"Вода с ароматом"</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> ФИЛЛС берёт натуральность и дизайн, но даёт полноценный ВКУС лимонада по более доступной цене</div>
+        </div>
+
+        <!-- ASCANIA -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Ascania</div>
+                <div class="competitor-price-tag">65-85 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>Российский</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>8-10 SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 35%; background: rgba(255,255,255,0.2);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 2/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Натуральные соки</span>
+                <span class="competitor-tag strength">Стекло = качество</span>
+                <span class="competitor-tag weakness">Слабая узнаваемость</span>
+                <span class="competitor-tag weakness">"Тихий" бренд</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> Аналогичное качество + агрессивный маркетинг + сильная история бренда</div>
+        </div>
+
+        <!-- HOLY WATER -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Holy Water</div>
+                <div class="competitor-price-tag">120-180 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>Украинский бренд</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>5-6 SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 40%; background: var(--gradient-hero);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 2/5 (в РФ)</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Дизайн-эталон</span>
+                <span class="competitor-tag strength">Арт-объект</span>
+                <span class="competitor-tag weakness">Очень высокая цена</span>
+                <span class="competitor-tag weakness">Точечное присутствие в РФ</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> ФИЛЛС вдохновляется уровнем дизайна Holy Water, но предлагает это по 65-85 руб. с федеральной дистрибуцией</div>
+        </div>
+
+        <!-- EVERVESS -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">Evervess</div>
+                <div class="competitor-price-tag">60-80 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>PepsiCo</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>5-6 SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 55%; background: rgba(255,255,255,0.2);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 3/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Широкое присутствие</span>
+                <span class="competitor-tag strength">Барная культура</span>
+                <span class="competitor-tag weakness">Тоники, не лимонады</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> Не прямой конкурент (тоники vs лимонады), но ФИЛЛС может предложить свою линейку "для миксов"</div>
+        </div>
+
+        <!-- ВКУСВИЛЛ -->
+        <div class="competitor-card">
+            <div class="competitor-header">
+                <div class="competitor-name">ВкусВилл СТМ</div>
+                <div class="competitor-price-tag">75-95 руб.</div>
+            </div>
+            <div class="competitor-meta">
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>Контрактные заводы</div>
+                <div class="competitor-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px;opacity:0.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>8-10 SKU</div>
+            </div>
+            <div class="competitor-strength-bar"><div class="competitor-strength-fill" style="width: 55%; background: var(--accent-green);"></div></div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">Сила бренда: 3/5</div>
+            <div class="competitor-tags">
+                <span class="competitor-tag strength">Максимально чистый состав</span>
+                <span class="competitor-tag strength">Доверие к ВкусВилл</span>
+                <span class="competitor-tag weakness">Только ВкусВилл</span>
+                <span class="competitor-tag weakness">Скучный дизайн</span>
+            </div>
+            <div class="competitor-insight"><strong>Обход:</strong> Сопоставимая натуральность + бренд с характером + доступен по всей стране</div>
+        </div>
+    </div>
+
+    <!-- СВОДНАЯ ТАБЛИЦА -->
+    <div style="margin-top: 4rem; overflow-x: auto;" class="fade-in">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.5rem; margin-bottom: 2rem;">Сводная таблица конкурентов</h3>
+        <table class="data-table">
+            <thead>
+                <tr><th>Бренд</th><th>Цена 330 мл</th><th>SKU</th><th>Дизайн</th><th>Состав</th><th>Бренд</th></tr>
+            </thead>
+            <tbody>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Добрый</td><td>55-75 руб.</td><td>10-12</td><td>Масс-маркет</td><td>Стандартный</td><td>&#9733;&#9733;&#9733;&#9733;&#9733;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Черноголовка</td><td>60-80 руб.</td><td>12-14</td><td>Ретро</td><td>Натуральный</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Laimon Fresh</td><td>65-85 руб.</td><td>5-6</td><td>Молодёжный</td><td>Стандартный</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Fantola</td><td>55-75 руб.</td><td>8-10</td><td>Кислотный</td><td>Стандартный</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Frustyle</td><td>55-70 руб.</td><td>5-6</td><td>Generic</td><td>Стандартный</td><td>&#9733;&#9733;&#9734;&#9734;&#9734;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Borjomi Flav.</td><td>85-120 руб.</td><td>4</td><td>Минимализм</td><td>Натуральный</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Ascania</td><td>65-85 руб.</td><td>8-10</td><td>Европейский</td><td>Натуральный</td><td>&#9733;&#9733;&#9734;&#9734;&#9734;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Holy Water</td><td>120-180 руб.</td><td>5-6</td><td>Арт-дизайн</td><td>Натуральный</td><td>&#9733;&#9733;&#9734;&#9734;&#9734;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">Evervess</td><td>60-80 руб.</td><td>5-6</td><td>Барный</td><td>Стандартный</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td></tr>
+                <tr><td style="font-weight:600;color:var(--text-primary)">ВкусВилл</td><td>75-95 руб.</td><td>8-10</td><td>Эко-минимализм</td><td>Натуральный</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ==================== НИШИ ==================== -->
+<section class="section">
+    <div class="section-header fade-in">
+        <div class="section-tag">Gaps Analysis</div>
+        <h2 class="section-title">Незанятые ниши</h2>
+        <p class="section-desc">6 пустых позиций на рынке, которые ФИЛЛС может занять первым</p>
+    </div>
+
+    <div class="gaps-grid fade-in">
+        <div class="gap-card"><div class="gap-number">01</div><h3>Крафтовый дизайн по цене масс-маркета</h3><p>Между Holy Water (красивый, но 150+) и Fantola (дешёвый, но "химия") — пустота. Арт-дизайн + натуральный состав за 65-85 руб. = никого нет.</p></div>
+        <div class="gap-card"><div class="gap-number">02</div><h3>Локальная история + современная подача</h3><p>Черноголовка = история, но устарело. Fantola = современно, но без истории. Совмещение двух качеств — пустая позиция.</p></div>
+        <div class="gap-card"><div class="gap-number">03</div><h3>Натуральный лимонад для молодёжи</h3><p>ВкусВилл натуральный — но скучный. Черноголовка — "для бумеров". Fantola для молодёжи — но "химия". Натуральный + молодёжный = пусто.</p></div>
+        <div class="gap-card"><div class="gap-number">04</div><h3>Необычные вкусы на натуральной базе</h3><p>Fantola делает необычные вкусы — но на химии. Никто не делает авторские вкусы (базилик, бузина, розмарин) на натуральной базе по средней цене.</p></div>
+        <div class="gap-card"><div class="gap-number">05</div><h3>Лимитки от локального бренда</h3><p>Fantola делает лимитки — но это "конвейер". Ни один локальный бренд не использует стратегию лимитированных серий с историей.</p></div>
+        <div class="gap-card"><div class="gap-number">06</div><h3>"Подмосковный крафт"</h3><p>Нет бренда, который стильно заявляет: "Мы из Подмосковья, у нас лаборатория ИТМО, 260 рецептов". Незанятая позиция.</p></div>
+    </div>
+</section>
+
+<!-- ==================== ДИЗАЙН ==================== -->
+<section class="section" id="design">
+    <div class="section-header fade-in">
+        <div class="section-tag">Дизайн упаковки</div>
+        <h2 class="section-title">Градиентный минимализм</h2>
+        <p class="section-desc">5 приёмов, которые превращают банку за 70 руб. в объект, который выглядит на 150+</p>
+    </div>
+
+    <div class="design-grid fade-in">
+        <div class="design-technique">
+            <div class="design-technique-number">01</div>
+            <h3>Grain-текстура</h3>
+            <p>Мелкий шум поверх градиента. Как плёночная фотография vs цифровая — плёнка "живее" из-за зерна. Убирает ощущение "из Canva", добавляет глубину и тактильность.</p>
+            <div class="cost-tag">Noise 3-8% в Photoshop/Figma</div>
+        </div>
+        <div class="design-technique">
+            <div class="design-technique-number">02</div>
+            <h3>Spot UV лак</h3>
+            <p>Глянцевый лак только на буквах "ФИЛЛС" поверх матовой банки. Буквы "приподнимаются", блестят, ощущаются пальцем. Логотип "ловит свет" на полке.</p>
+            <div class="cost-tag">+3-5 руб./банку</div>
+        </div>
+        <div class="design-technique">
+            <div class="design-technique-number">03</div>
+            <h3>Матовый лак (soft-touch)</h3>
+            <p>Вся банка бархатистая на ощупь. Прямая метафора бренда — "feels/чувствуется" — буквально ЧУВСТВУЕШЬ разницу. В РФ так никто не делает за 55-90 руб.</p>
+            <div class="cost-tag">+2-4 руб./банку</div>
+        </div>
+        <div class="design-technique">
+            <div class="design-technique-number">04</div>
+            <h3>Многослойный градиент</h3>
+            <p>Вместо "цвет А &rarr; цвет Б" — третий промежуточный тон. "Свечение" в точке перехода создаёт ощущение глубины, как будто свет идёт изнутри банки.</p>
+            <div class="cost-tag">Только дизайн, 0 руб. доп.</div>
+        </div>
+        <div class="design-technique">
+            <div class="design-technique-number">05</div>
+            <h3>Логотип на крышке</h3>
+            <p>90% брендов игнорируют верх банки. В холодильниках покупатель видит банки сверху. Нанести лого на крышку — бесплатная дифференциация.</p>
+            <div class="cost-tag">+0 руб.</div>
+        </div>
+        <div class="design-technique" style="background: rgba(168,85,247,0.05); border-color: rgba(168,85,247,0.15);">
+            <div class="design-technique-number">&#x2211;</div>
+            <h3>Итоговая формула банки</h3>
+            <p>Многослойный градиент + grain + матовый лак по всей поверхности + Spot UV на логотипе + лого на крышке. Шрифт: жирный геометрический гротеск, кириллица, белый.</p>
+            <div class="cost-tag">+5-9 руб. к базовой печати</div>
+        </div>
+    </div>
+
+    <!-- CAN SHOWCASE -->
+    <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.5rem; margin-top: 4rem; margin-bottom: 0.5rem;" class="fade-in">Линейка ФИЛЛС</h3>
+    <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;" class="fade-in">6 вкусов — 6 градиентов — "радуга" на полке</p>
+
+    <div class="cans-showcase fade-in">
+        <div class="can-mockup">
+            <div class="can-photo"><img src="ФИЛЛС-фото/web/клубника-базилик.webp" alt="ФИЛЛС Клубника-Базилик"></div>
+            <div class="can-flavor-name">Клубника-Базилик</div>
+            <div class="can-emotion">"чувствуется лето"</div>
+        </div>
+        <div class="can-mockup">
+            <div class="can-photo"><img src="ФИЛЛС-фото/web/Виноград-кремсода.webp" alt="ФИЛЛС Виноград-Крем"></div>
+            <div class="can-flavor-name">Виноград-Крем</div>
+            <div class="can-emotion">"чувствуется уют"</div>
+        </div>
+        <div class="can-mockup">
+            <div class="can-photo"><img src="ФИЛЛС-фото/web/манго-маракуйя.webp" alt="ФИЛЛС Манго-Маракуйя"></div>
+            <div class="can-flavor-name">Манго-Маракуйя</div>
+            <div class="can-emotion">"чувствуется энергия"</div>
+        </div>
+        <div class="can-mockup">
+            <div class="can-photo"><img src="ФИЛЛС-фото/web/лимон-бузина.webp" alt="ФИЛЛС Лимон-Бузина"></div>
+            <div class="can-flavor-name">Лимон-Бузина</div>
+            <div class="can-emotion">"чувствуется лёгкость"</div>
+        </div>
+        <div class="can-mockup">
+            <div class="can-photo"><img src="ФИЛЛС-фото/web/грейпфрут-розмарин.webp" alt="ФИЛЛС Грейпфрут-Розмарин"></div>
+            <div class="can-flavor-name">Грейпфрут-Розмарин</div>
+            <div class="can-emotion">"чувствуется вечер"</div>
+        </div>
+        <div class="can-mockup">
+            <div class="can-photo"><img src="ФИЛЛС-фото/web/личи-роза.webp" alt="ФИЛЛС Личи-Роза"></div>
+            <div class="can-flavor-name">Личи-Роза</div>
+            <div class="can-emotion">"чувствуется нежность"</div>
+        </div>
+    </div>
+
+    <div class="insight-box fade-in" style="margin-top: 2.5rem;">
+        <h4>Shelf Impact</h4>
+        <p>Типичная полка: Добрый (зелёный, перегружен фруктами), Черноголовка (пёстрый ретро), Fantola (кислотные цвета, "кричит"). <strong style="color: var(--text-primary);">ФИЛЛС: матовые пастельные градиенты с grain-текстурой — как тихий голос в шумной комнате.</strong> Привлекает больше внимания, чем очередной "крик".</p>
+    </div>
+
+</section>
+
+<!-- ==================== ЛИНЕЙКА ==================== -->
+<section class="section" id="lineup">
+    <div class="section-header fade-in">
+        <div class="section-tag">Продуктовая линейка</div>
+        <h2 class="section-title">6 SKU на старте</h2>
+        <p class="section-desc">Каждый вкус — отдельная роль в портфеле. От флагмана до контент-генератора.</p>
+    </div>
+
+    <div class="sku-grid fade-in">
+        <div class="sku-card">
+            <div class="sku-gradient-bar" style="background: linear-gradient(90deg, #ff6b6b, #5eab8b);"></div>
+            <div class="sku-content">
+                <div class="sku-role" style="background: rgba(255,107,107,0.1); color: var(--accent-coral);">Hero SKU — Флагман</div>
+                <div class="sku-name">Клубника + Базилик</div>
+                <div class="sku-desc">На него строится вся коммуникация. Коктейльная классика. Два ингредиента, которые вместе создают "wow".</div>
+                <div class="sku-meta-grid">
+                    <div class="sku-meta-item"><strong>ЦА:</strong> жен. 20-35, HoReCa</div>
+                    <div class="sku-meta-item"><strong>Сок:</strong> &ge;5% клубничный</div>
+                    <div class="sku-meta-item"><strong>Градиент:</strong> коралл &rarr; мятный</div>
+                    <div class="sku-meta-item"><strong>Добавки:</strong> экстракт базилика</div>
+                </div>
+                <div class="sku-share"><span style="font-size:0.75rem;color:var(--text-muted);">Прогноз</span><div class="sku-share-bar"><div class="sku-share-fill" style="width:17.5%;background:var(--accent-coral);"></div></div><div class="sku-share-label" style="color:var(--accent-coral);">~17%</div></div>
+            </div>
+        </div>
+
+        <div class="sku-card">
+            <div class="sku-gradient-bar" style="background: linear-gradient(90deg, #7c3aed, #c9a87c);"></div>
+            <div class="sku-content">
+                <div class="sku-role" style="background: rgba(124,58,237,0.1); color: var(--accent-purple);">Bridge — Мост от классики</div>
+                <div class="sku-name">Виноград + Крем-Сода</div>
+                <div class="sku-desc">Два любимых вкуса России в одном. Понятный для всех — ностальгический, но в новой упаковке.</div>
+                <div class="sku-meta-grid">
+                    <div class="sku-meta-item"><strong>ЦА:</strong> 18-40, широкая</div>
+                    <div class="sku-meta-item"><strong>Сок:</strong> &ge;5% виноградный</div>
+                    <div class="sku-meta-item"><strong>Градиент:</strong> фиолет &rarr; бежевый</div>
+                    <div class="sku-meta-item"><strong>Добавки:</strong> ванилин</div>
+                </div>
+                <div class="sku-share"><span style="font-size:0.75rem;color:var(--text-muted);">Прогноз</span><div class="sku-share-bar"><div class="sku-share-fill" style="width:22.5%;background:var(--accent-purple);"></div></div><div class="sku-share-label" style="color:var(--accent-purple);">~22%</div></div>
+            </div>
+        </div>
+
+        <div class="sku-card">
+            <div class="sku-gradient-bar" style="background: linear-gradient(90deg, #fbbf24, #fb923c);"></div>
+            <div class="sku-content">
+                <div class="sku-role" style="background: rgba(251,191,36,0.1); color: var(--accent-yellow);">Volume Driver — Генератор объёма</div>
+                <div class="sku-name">Манго + Маракуйя</div>
+                <div class="sku-desc">Манго — вкус #1 у зумеров. Генератор объёма. У Доброго есть, но без маракуйи и с обычным дизайном.</div>
+                <div class="sku-meta-grid">
+                    <div class="sku-meta-item"><strong>ЦА:</strong> молодёжь 16-28</div>
+                    <div class="sku-meta-item"><strong>Сок:</strong> манго &ge;3%, маракуйя &ge;2%</div>
+                    <div class="sku-meta-item"><strong>Градиент:</strong> жёлтый &rarr; оранж</div>
+                    <div class="sku-meta-item"><strong>Добавки:</strong> витамин C</div>
+                </div>
+                <div class="sku-share"><span style="font-size:0.75rem;color:var(--text-muted);">Прогноз</span><div class="sku-share-bar"><div class="sku-share-fill" style="width:27.5%;background:var(--accent-yellow);"></div></div><div class="sku-share-label" style="color:var(--accent-yellow);">~27%</div></div>
+            </div>
+        </div>
+
+        <div class="sku-card">
+            <div class="sku-gradient-bar" style="background: linear-gradient(90deg, #fef9c3, #f5e6c8);"></div>
+            <div class="sku-content">
+                <div class="sku-role" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">Дифференциатор</div>
+                <div class="sku-name">Лимон + Бузина</div>
+                <div class="sku-desc">Ни у кого из массовых конкурентов нет бузины. Европейский тренд (Hugo). Работает как альтернатива алкоголю.</div>
+                <div class="sku-meta-grid">
+                    <div class="sku-meta-item"><strong>ЦА:</strong> жен. 25-40</div>
+                    <div class="sku-meta-item"><strong>Сок:</strong> &ge;5% лимонный</div>
+                    <div class="sku-meta-item"><strong>Градиент:</strong> бледно-жёлт &rarr; шампань</div>
+                    <div class="sku-meta-item"><strong>Добавки:</strong> экстракт бузины</div>
+                </div>
+                <div class="sku-share"><span style="font-size:0.75rem;color:var(--text-muted);">Прогноз</span><div class="sku-share-bar"><div class="sku-share-fill" style="width:10%;background:var(--text-muted);"></div></div><div class="sku-share-label">~10%</div></div>
+            </div>
+        </div>
+
+        <div class="sku-card">
+            <div class="sku-gradient-bar" style="background: linear-gradient(90deg, #c2410c, #d4736a);"></div>
+            <div class="sku-content">
+                <div class="sku-role" style="background: rgba(251,146,60,0.1); color: var(--accent-orange);">Adult Appeal</div>
+                <div class="sku-name">Грейпфрут + Розмарин</div>
+                <div class="sku-desc">Горчинка — тренд (Aperol-эффект). Для тех, кто "не пьёт сладкую газировку". Взрослый вкус.</div>
+                <div class="sku-meta-grid">
+                    <div class="sku-meta-item"><strong>ЦА:</strong> м + ж, 25-40</div>
+                    <div class="sku-meta-item"><strong>Сок:</strong> &ge;5% грейпфрутовый</div>
+                    <div class="sku-meta-item"><strong>Градиент:</strong> терракот &rarr; коралл</div>
+                    <div class="sku-meta-item"><strong>Добавки:</strong> экстракт розмарина</div>
+                </div>
+                <div class="sku-share"><span style="font-size:0.75rem;color:var(--text-muted);">Прогноз</span><div class="sku-share-bar"><div class="sku-share-fill" style="width:12.5%;background:var(--accent-orange);"></div></div><div class="sku-share-label" style="color:var(--accent-orange);">~12%</div></div>
+            </div>
+        </div>
+
+        <div class="sku-card">
+            <div class="sku-gradient-bar" style="background: linear-gradient(90deg, #fda4af, #f0d4e0);"></div>
+            <div class="sku-content">
+                <div class="sku-role" style="background: rgba(244,114,182,0.1); color: var(--accent-pink);">Social Media Driver</div>
+                <div class="sku-name">Личи + Роза</div>
+                <div class="sku-desc">Самый "инстаграмный" SKU. Генератор UGC-контента. Покупают ради фото, остаются ради вкуса.</div>
+                <div class="sku-meta-grid">
+                    <div class="sku-meta-item"><strong>ЦА:</strong> жен. 20-35</div>
+                    <div class="sku-meta-item"><strong>Сок:</strong> &ge;3% личи</div>
+                    <div class="sku-meta-item"><strong>Градиент:</strong> розовый &rarr; жемчужный</div>
+                    <div class="sku-meta-item"><strong>Добавки:</strong> розовая вода</div>
+                </div>
+                <div class="sku-share"><span style="font-size:0.75rem;color:var(--text-muted);">Прогноз</span><div class="sku-share-bar"><div class="sku-share-fill" style="width:9%;background:var(--accent-pink);"></div></div><div class="sku-share-label" style="color:var(--accent-pink);">~9%</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PORTFOLIO CHART -->
+    <div class="positioning-section fade-in" style="margin-top: 3rem;">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.5rem; margin-bottom: 1.5rem;">Прогноз структуры продаж</h3>
+        <div style="max-width: 500px; margin: 0 auto;"><canvas id="portfolioChart"></canvas></div>
+    </div>
+
+    <!-- РАСШИРЕНИЕ -->
+    <div style="margin-top: 4rem;" class="fade-in">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.5rem; margin-bottom: 2rem;">Расширение линейки</h3>
+        <div class="wave-grid">
+            <div class="wave-card"><h4>Волна 2 — месяц 3-4</h4><ul><li>Арбуз + Мята — летний хит</li><li>Груша + Имбирь — осенне-зимний</li></ul></div>
+            <div class="wave-card"><h4>Волна 3 — месяц 5-6</h4><ul><li>ФИЛЛС Тоник — для HoReCa</li><li>ФИЛЛС Zero — топ-2 SKU без сахара</li></ul></div>
+            <div class="wave-card"><h4>Волна 4 — месяц 8-12</h4><ul><li>ФИЛЛС Focus — L-теанин + цитрус</li><li>ФИЛЛС Calm — магний + лаванда</li></ul></div>
+            <div class="wave-card"><h4>Сезонные лимитки</h4><ul><li>НГ: Мандарин + Пряности</li><li>14 фев: Роза + Малина</li><li>Лето: Дыня + Мята</li></ul></div>
+        </div>
+    </div>
+
+    <!-- АНТИВКУСЫ -->
+    <div style="margin-top: 3rem;" class="fade-in">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--accent-coral);">Вкусы-убийцы (НЕ делать)</h3>
+        <div class="antivkus-grid">
+            <div class="antivkus-item"><span class="antivkus-x">&times;</span><div><div class="antivkus-name">Кола / Байкал</div><div class="antivkus-reason">Добрый, Черноголовка — перенасыщено</div></div></div>
+            <div class="antivkus-item"><span class="antivkus-x">&times;</span><div><div class="antivkus-name">Чистый апельсин</div><div class="antivkus-reason">Fanta, Добрый — забито</div></div></div>
+            <div class="antivkus-item"><span class="antivkus-x">&times;</span><div><div class="antivkus-name">Тархун / Дюшес</div><div class="antivkus-reason">Черноголовка владеет нишей</div></div></div>
+            <div class="antivkus-item"><span class="antivkus-x">&times;</span><div><div class="antivkus-name">Мохито</div><div class="antivkus-reason">Каждый второй бренд делает</div></div></div>
+            <div class="antivkus-item"><span class="antivkus-x">&times;</span><div><div class="antivkus-name">Энергетик-вкусы</div><div class="antivkus-reason">Ассоциация с дешёвыми напитками</div></div></div>
+            <div class="antivkus-item"><span class="antivkus-x">&times;</span><div><div class="antivkus-name">Лаванда соло</div><div class="antivkus-reason">"Мыло" — только с ягодой</div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== ЭКОНОМИКА ==================== -->
+<section class="section" id="economics">
+    <div class="section-header fade-in">
+        <div class="section-tag">Экономика</div>
+        <h2 class="section-title">Цифры и маржинальность</h2>
+        <p class="section-desc">Себестоимость, ценовая цепочка, инвестиции и точка окупаемости</p>
+    </div>
+
+    <div class="economics-breakdown fade-in">
+        <div class="card">
+            <div class="card-glow"></div>
+            <h3 style="font-family: 'Space Grotesk'; font-size: 1.15rem; margin-bottom: 1.5rem;">Себестоимость банки 330 мл</h3>
+            <div class="cost-item"><span class="cost-item-name">Сырьё (вода, сахар, соки, CO2)</span><span class="cost-item-value">5-10 руб.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Банка алюм. + крышка</span><span class="cost-item-value">6-8 руб.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Печать (gradient + grain + spot UV + мат.лак)</span><span class="cost-item-value">4-8 руб.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Честный ЗНАК</span><span class="cost-item-value">~0.50 руб.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Акциз на сахар (&le;5 г/100 мл)</span><span class="cost-item-value" style="color: var(--accent-green);">0 руб.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Энергия, амортизация</span><span class="cost-item-value">1-3 руб.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Труд</span><span class="cost-item-value">1-2 руб.</span></div>
+            <div class="cost-item total"><span class="cost-item-name">ИТОГО</span><span class="cost-item-value" style="background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">~18-34 руб.</span></div>
+        </div>
+
+        <div class="card">
+            <div class="card-glow"></div>
+            <h3 style="font-family: 'Space Grotesk'; font-size: 1.15rem; margin-bottom: 1.5rem;">Инвестиции в запуск</h3>
+            <div class="cost-item"><span class="cost-item-name">Разработка рецептур</span><span class="cost-item-value" style="color: var(--accent-green);">0 (технолог в штате)</span></div>
+            <div class="cost-item"><span class="cost-item-name">Дизайн упаковки (6 SKU)</span><span class="cost-item-value">100 тыс.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Первая партия (60,000 банок)</span><span class="cost-item-value">1.3-2 млн</span></div>
+            <div class="cost-item"><span class="cost-item-name">Маркетинг запуска (3 мес.)</span><span class="cost-item-value">300-500 тыс.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Декларация о соответствии</span><span class="cost-item-value">30-50 тыс.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Карточки на маркетплейсах</span><span class="cost-item-value">30-50 тыс.</span></div>
+            <div class="cost-item"><span class="cost-item-name">Оборотный капитал</span><span class="cost-item-value">500 тыс.-1 млн</span></div>
+            <div class="cost-item total"><span class="cost-item-name">ИТОГО</span><span class="cost-item-value" style="background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">~2-3.5 млн руб.</span></div>
+        </div>
+    </div>
+
+    <!-- ЦЕНОВАЯ ЦЕПОЧКА -->
+    <div class="fade-in" style="margin-top: 3rem;">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.25rem; margin-bottom: 1.5rem;">Ценовая цепочка</h3>
+        <div class="price-chain">
+            <div class="price-chain-step"><div class="price-chain-value">22-28</div><div class="price-chain-label">Себестоимость</div></div>
+            <div class="price-chain-arrow">&rarr;</div>
+            <div class="price-chain-step"><div class="price-chain-value" style="color: var(--accent-purple);">35-45</div><div class="price-chain-label">Отпускная завода</div></div>
+            <div class="price-chain-arrow">&rarr;</div>
+            <div class="price-chain-step"><div class="price-chain-value">40-55</div><div class="price-chain-label">+ Дистрибьютор</div></div>
+            <div class="price-chain-arrow">&rarr;</div>
+            <div class="price-chain-step" style="border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.05);"><div class="price-chain-value" style="background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">60-80</div><div class="price-chain-label">Цена на полке</div></div>
+        </div>
+    </div>
+
+    <!-- МАРЖА -->
+    <div class="market-grid fade-in" style="margin-top: 3rem;">
+        <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(52, 211, 153, 0.1);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <div class="metric-value" style="color: var(--accent-green);">15 руб.</div>
+            <div class="metric-label">Маржа с банки (при отпускной 40 руб.)</div>
+            <div class="metric-trend up">37% маржинальность</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(168, 85, 247, 0.1);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <div class="metric-value" style="color: var(--accent-purple);">200K</div>
+            <div class="metric-label">Банок до точки окупаемости</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(251, 191, 36, 0.1);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="metric-value" style="color: var(--accent-yellow);">4-7</div>
+            <div class="metric-label">Месяцев до окупаемости</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(255, 107, 107, 0.1);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div class="metric-value" style="color: var(--accent-coral);">45-55</div>
+            <div class="metric-label">Руб. маржа при прямых продажах</div>
+        </div>
+    </div>
+
+    <!-- MARGIN CHART -->
+    <div class="positioning-section fade-in" style="margin-top: 3rem;">
+        <h3 style="text-align: center; font-family: 'Space Grotesk'; font-size: 1.25rem; margin-bottom: 1.5rem;">Маржинальность по каналам</h3>
+        <div style="max-width: 600px; margin: 0 auto;"><canvas id="marginChart"></canvas></div>
+    </div>
+</section>
+
+<!-- ==================== ДИСТРИБУЦИЯ ==================== -->
+<section class="section">
+    <div class="section-header fade-in">
+        <div class="section-tag">Стратегия продвижения</div>
+        <h2 class="section-title">Каналы и продвижение</h2>
+        <p class="section-desc">Поэтапное расширение: от маркетплейсов до федеральных сетей</p>
+    </div>
+
+    <div class="channels-timeline fade-in">
+        <div class="channel-phase">
+            <div class="channel-phase-header">
+                <div class="channel-phase-badge" style="background: rgba(168,85,247,0.15); color: var(--accent-purple);">Этап 1: мес. 1-3</div>
+                <div class="channel-phase-title">Мягкий запуск</div>
+            </div>
+            <div class="channel-list">
+                <div class="channel-item"><strong>Wildberries / Ozon</strong>Витрина, сбор отзывов. Комиссия 15-25%</div>
+                <div class="channel-item"><strong>Самокат / Лавка / Купер</strong>Быстрая доставка — отличный канал</div>
+                <div class="channel-item"><strong>Точка при заводе</strong>Дегустации, экскурсии — макс. маржа</div>
+                <div class="channel-item"><strong>HoReCa (МО &rarr; Москва)</strong>Наценка 150-300%, работает на имидж</div>
+                <div class="channel-item"><strong>Крафтовые магазины</strong>Целевая аудитория уже здесь</div>
+            </div>
+        </div>
+        <div class="channel-phase">
+            <div class="channel-phase-header">
+                <div class="channel-phase-badge" style="background: rgba(96,165,250,0.15); color: var(--accent-blue);">Этап 2: мес. 3-6</div>
+                <div class="channel-phase-title">Розница</div>
+            </div>
+            <div class="channel-list">
+                <div class="channel-item"><strong>ВкусВилл</strong>"Локальный производитель" — лояльный вход</div>
+                <div class="channel-item"><strong>Локальные сети МО</strong>Верный, ДИКСИ — домашний рынок</div>
+            </div>
+        </div>
+        <div class="channel-phase">
+            <div class="channel-phase-header">
+                <div class="channel-phase-badge" style="background: rgba(52,211,153,0.15); color: var(--accent-green);">Этап 3: мес. 6-12</div>
+                <div class="channel-phase-title">Масштабирование</div>
+            </div>
+            <div class="channel-list">
+                <div class="channel-item"><strong>Пятёрочка / Перекрёсток</strong>МО-кластер, 200-500 точек</div>
+                <div class="channel-item"><strong>Магнит</strong>Жёсткие условия, гигантский объём</div>
+                <div class="channel-item"><strong>Лента</strong>Гипермаркет — легче войти</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="insight-box fade-in" style="margin-top: 2rem;">
+        <h4>Входные условия в сети</h4>
+        <p>Ретро-бонус: 5-15%. Листинговый взнос: 50-500 тыс. руб./SKU. Промо-обязательства: промо-календарь. Отсрочка платежа: 30-45 дней.</p>
+    </div>
+</section>
+
+<!-- ==================== РЕГУЛЯТОРИКА ==================== -->
+<section class="section">
+    <div class="section-header fade-in">
+        <div class="section-tag">Регуляторика</div>
+        <h2 class="section-title">Требования и стандарты</h2>
+    </div>
+
+    <div class="reg-grid fade-in">
+        <div class="reg-item"><div class="reg-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9999b0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><div><h4>Декларация о соответствии</h4><p>ТР ТС 021/2011, ТР ТС 022/2011. Обязательна.</p></div></div>
+        <div class="reg-item"><div class="reg-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9999b0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h4>ХАССП</h4><p>Система анализа рисков. Обязательна для производства.</p></div></div>
+        <div class="reg-item"><div class="reg-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9999b0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><rect x="7" y="7" width="3" height="9"/><rect x="14" y="7" width="3" height="5"/></svg></div><div><h4>Честный ЗНАК</h4><p>Обязательная маркировка DataMatrix. ~0.50 руб./шт.</p></div></div>
+        <div class="reg-item"><div class="reg-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9999b0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><div><h4>Акциз на сахар</h4><p>7 руб./л при >5 г/100 мл. При &le;5 г — нет акциза.</p></div></div>
+        <div class="reg-item"><div class="reg-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9999b0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><div><h4>Маркировка состава</h4><p>КБЖУ, аллергены, дата, срок годности, производитель.</p></div></div>
+        <div class="reg-item"><div class="reg-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9999b0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><h4>Штрафы</h4><p>50-300 тыс. руб. + конфискация за нарушения.</p></div></div>
+    </div>
+</section>
+
+<!-- ==================== ДОРОЖНАЯ КАРТА ==================== -->
+<section class="section" id="roadmap">
+    <div class="section-header fade-in">
+        <div class="section-tag">Дорожная карта</div>
+        <h2 class="section-title">12 месяцев до масштаба</h2>
+        <p class="section-desc">От финализации дизайна до входа в федеральные сети</p>
+    </div>
+
+    <div class="timeline fade-in">
+        <div class="timeline-item">
+            <div class="timeline-dot" style="background: var(--accent-purple);"></div>
+            <div class="timeline-phase" style="color: var(--accent-purple);">Месяц 1-2</div>
+            <div class="timeline-title">Подготовка</div>
+            <div class="timeline-tasks">
+                <div class="timeline-task">Финализация дизайна банок (6 SKU)</div>
+                <div class="timeline-task">Разработка рецептур (технолог)</div>
+                <div class="timeline-task">Закупка сырья, банок, этикеток</div>
+                <div class="timeline-task">Регистрация в Честном ЗНАКе</div>
+                <div class="timeline-task">Декларация о соответствии</div>
+                <div class="timeline-task">Настройка Wildberries, Ozon</div>
+                <div class="timeline-task">Создание соцсетей ФИЛЛС</div>
+                <div class="timeline-task">Разработка лендинга ФИЛЛС (рекламный сайт)</div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot" style="background: var(--accent-blue);"></div>
+            <div class="timeline-phase" style="color: var(--accent-blue);">Месяц 2-3</div>
+            <div class="timeline-title">Мягкий запуск</div>
+            <div class="timeline-tasks">
+                <div class="timeline-task">Производство первой партии (10,000 банок &times; 6)</div>
+                <div class="timeline-task">Запуск на Wildberries, Ozon</div>
+                <div class="timeline-task">Самокат, Яндекс Лавка</div>
+                <div class="timeline-task">Дегустации при заводе</div>
+                <div class="timeline-task">Контент: "как создаётся ФИЛЛС"</div>
+                <div class="timeline-task">Рассылка оптовикам</div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot" style="background: var(--accent-green);"></div>
+            <div class="timeline-phase" style="color: var(--accent-green);">Месяц 3-6</div>
+            <div class="timeline-title">Расширение</div>
+            <div class="timeline-tasks">
+                <div class="timeline-task">Вход в ВкусВилл, локальные сети МО</div>
+                <div class="timeline-task">Волна 2 вкусов (Арбуз-Мята, Груша-Имбирь)</div>
+                <div class="timeline-task">Коллаборации с ресторанами/барами</div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot" style="background: var(--accent-yellow);"></div>
+            <div class="timeline-phase" style="color: var(--accent-yellow);">Месяц 6-12</div>
+            <div class="timeline-title">Масштабирование</div>
+            <div class="timeline-tasks">
+                <div class="timeline-task">Вход в Пятёрочку/Перекрёсток (МО)</div>
+                <div class="timeline-task">ФИЛЛС Zero (без сахара)</div>
+                <div class="timeline-task">Сезонные лимитки</div>
+                <div class="timeline-task">Анализ: какие SKU лидеры, какие убрать</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== ЧЕК-ЛИСТ ==================== -->
+<section class="section">
+    <div class="section-header fade-in">
+        <div class="section-tag">Чек-лист</div>
+        <h2 class="section-title">Готовность к запуску</h2>
+    </div>
+
+    <div class="checklist fade-in">
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Рецептуры утверждены и протестированы (6 SKU)</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Дизайн банок финализирован (gradient + grain + spot UV)</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Заказан тестовый тираж банок</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Декларация о соответствии получена</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Регистрация в Честном ЗНАКе</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Оборудование DataMatrix установлено</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Сырьё и банки закуплены</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Карточки на WB и Ozon созданы</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Соцсети запущены (Telegram, ВК)</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Фото/видео контент снят</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Оптовикам разосланы предложения</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Дегустационная программа спланирована</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Сахар &le;5 г/100 мл (без акциза)</div>
+        <div class="checklist-item"><div class="checklist-check"><svg class="check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>Тестовая группа попробовала все 6 вкусов</div>
+    </div>
+</section>
+
+<!-- ==================== ИТОГ ==================== -->
+<section class="section">
+    <div class="positioning-section fade-in" style="text-align: center; padding: 4rem 3rem;">
+        <div class="section-tag" style="margin-bottom: 1.5rem;">Итоговый вывод</div>
+        <h2 style="font-family: 'Space Grotesk'; font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; margin-bottom: 2rem; line-height: 1.4;">ФИЛЛС занимает уникальную позицию на пересечении четырёх качеств, которые ни один конкурент не совмещает</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; text-align: left;">
+            <div class="metric-card" style="padding: 2rem;">
+                <div class="metric-value" style="font-size: 1.35rem; color: var(--accent-green); margin-bottom: 0.75rem;">Натуральный состав</div>
+                <div class="metric-label" style="font-size: 0.95rem;">Как Черноголовка/ВкусВилл — но без занудства. Реальные соки и экстракты в составе.</div>
+            </div>
+            <div class="metric-card" style="padding: 2rem;">
+                <div class="metric-value" style="font-size: 1.35rem; color: var(--accent-purple); margin-bottom: 0.75rem;">Современный дизайн</div>
+                <div class="metric-label" style="font-size: 0.95rem;">Как Holy Water — но по доступной цене. Градиенты, grain, soft-touch, spot UV.</div>
+            </div>
+            <div class="metric-card" style="padding: 2rem;">
+                <div class="metric-value" style="font-size: 1.35rem; color: var(--accent-yellow); margin-bottom: 0.75rem;">Локальная история</div>
+                <div class="metric-label" style="font-size: 0.95rem;">Лыткарино, Подмосковье, 260 рецептов, лаборатория ИТМО — уникальный нарратив.</div>
+            </div>
+            <div class="metric-card" style="padding: 2rem;">
+                <div class="metric-value" style="font-size: 1.35rem; color: var(--accent-coral); margin-bottom: 0.75rem;">Молодёжная энергия</div>
+                <div class="metric-label" style="font-size: 0.95rem;">Как Fantola — но без "химии" и "дешевизны". Стиль без компромиссов.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-brand">ФИЛЛС</div>
+    <div class="footer-tagline">Крафтовый лимонад из Подмосковья с дизайнерской упаковкой по честной цене</div>
+    <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted);">Подготовлено для завода ЛыткаринЪ &middot; Апрель 2026</div>
+</footer>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+// ===== SCROLL ANIMATIONS =====
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== POSITIONING CHART =====
+const posCtx = document.getElementById('positioningChart').getContext('2d');
+new Chart(posCtx, {
+    type: 'bubble',
+    data: {
+        datasets: [
+            { label: 'Добрый', data: [{x: 3, y: 65, r: 18}], backgroundColor: 'rgba(52,211,153,0.6)', borderColor: 'rgba(52,211,153,0.8)', borderWidth: 2 },
+            { label: 'Черноголовка', data: [{x: 2, y: 70, r: 15}], backgroundColor: 'rgba(251,191,36,0.6)', borderColor: 'rgba(251,191,36,0.8)', borderWidth: 2 },
+            { label: 'Laimon Fresh', data: [{x: 6, y: 75, r: 10}], backgroundColor: 'rgba(52,211,153,0.4)', borderColor: 'rgba(52,211,153,0.6)', borderWidth: 2 },
+            { label: 'Fantola', data: [{x: 7, y: 65, r: 12}], backgroundColor: 'rgba(244,114,182,0.5)', borderColor: 'rgba(244,114,182,0.7)', borderWidth: 2 },
+            { label: 'Frustyle', data: [{x: 4, y: 62, r: 8}], backgroundColor: 'rgba(255,255,255,0.15)', borderColor: 'rgba(255,255,255,0.3)', borderWidth: 2 },
+            { label: 'Borjomi Flav.', data: [{x: 7.5, y: 105, r: 8}], backgroundColor: 'rgba(96,165,250,0.5)', borderColor: 'rgba(96,165,250,0.7)', borderWidth: 2 },
+            { label: 'Ascania', data: [{x: 6.5, y: 85, r: 7}], backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'rgba(255,255,255,0.4)', borderWidth: 2 },
+            { label: 'Holy Water', data: [{x: 9, y: 160, r: 8}], backgroundColor: 'rgba(168,85,247,0.4)', borderColor: 'rgba(168,85,247,0.6)', borderWidth: 2 },
+            { label: 'Evervess', data: [{x: 5, y: 70, r: 9}], backgroundColor: 'rgba(255,255,255,0.15)', borderColor: 'rgba(255,255,255,0.3)', borderWidth: 2 },
+            { label: 'ВкусВилл', data: [{x: 5.5, y: 85, r: 9}], backgroundColor: 'rgba(52,211,153,0.3)', borderColor: 'rgba(52,211,153,0.5)', borderWidth: 2 },
+            { label: 'ФИЛЛС', data: [{x: 8.5, y: 72, r: 14}],
+              backgroundColor: 'rgba(168,85,247,0.7)', borderColor: '#a855f7', borderWidth: 3,
+              hoverBackgroundColor: 'rgba(168,85,247,0.9)' },
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                labels: { color: '#8888a0', font: { size: 11, family: 'Inter' }, padding: 15, usePointStyle: true, pointStyle: 'circle' },
+                position: 'bottom'
+            },
+            tooltip: {
+                backgroundColor: '#262630',
+                titleColor: '#f0f0f5',
+                bodyColor: '#8888a0',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1,
+                cornerRadius: 8,
+                padding: 12,
+                callbacks: {
+                    label: function(ctx) { return ctx.dataset.label + ': дизайн ' + ctx.raw.x + '/10, цена ' + ctx.raw.y + ' руб.'; }
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: { display: true, text: 'Современность дизайна  \u2192', color: '#555570', font: { size: 12, family: 'Inter' } },
+                min: 0, max: 10,
+                grid: { color: 'rgba(255,255,255,0.04)' },
+                ticks: { color: '#555570', font: { size: 10 } }
+            },
+            y: {
+                title: { display: true, text: '\u2191  Цена (руб.)', color: '#555570', font: { size: 12, family: 'Inter' } },
+                min: 40, max: 200,
+                grid: { color: 'rgba(255,255,255,0.04)' },
+                ticks: { color: '#555570', font: { size: 10 } }
+            }
+        }
+    }
+});
+
+// ===== PORTFOLIO CHART =====
+const portCtx = document.getElementById('portfolioChart').getContext('2d');
+new Chart(portCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Манго-Маракуйя', 'Виноград-Крем', 'Клубника-Базилик', 'Грейпфрут-Розмарин', 'Лимон-Бузина', 'Личи-Роза'],
+        datasets: [{
+            data: [27.5, 22.5, 17.5, 12.5, 10, 9],
+            backgroundColor: ['#fbbf24', '#a855f7', '#ff6b6b', '#fb923c', '#fef9c3', '#f472b6'],
+            borderColor: '#1e1e28',
+            borderWidth: 3,
+            hoverOffset: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        cutout: '60%',
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: { color: '#8888a0', font: { size: 12, family: 'Inter' }, padding: 15, usePointStyle: true, pointStyle: 'circle' }
+            },
+            tooltip: {
+                backgroundColor: '#262630',
+                titleColor: '#f0f0f5',
+                bodyColor: '#8888a0',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1,
+                cornerRadius: 8,
+                padding: 12,
+                callbacks: {
+                    label: function(ctx) { return ' ' + ctx.label + ': ~' + ctx.raw + '% продаж'; }
+                }
+            }
+        }
+    }
+});
+
+// ===== MARGIN CHART =====
+const marginCtx = document.getElementById('marginChart').getContext('2d');
+new Chart(marginCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Прямые продажи\n(завод/экскурсии)', 'HoReCa\n(бары/рестораны)', 'Дистрибьютор\n\u2192 розница', 'Маркетплейсы\n(WB/Ozon)'],
+        datasets: [
+            {
+                label: 'Себестоимость',
+                data: [25, 25, 25, 25],
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                borderRadius: 6,
+            },
+            {
+                label: 'Маржа',
+                data: [50, 20, 15, 15],
+                backgroundColor: ['rgba(52,211,153,0.7)', 'rgba(168,85,247,0.7)', 'rgba(96,165,250,0.7)', 'rgba(251,191,36,0.7)'],
+                borderRadius: 6,
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        indexAxis: 'y',
+        scales: {
+            x: {
+                stacked: true,
+                grid: { color: 'rgba(255,255,255,0.04)' },
+                ticks: { color: '#555570', callback: function(v) { return v + ' руб.'; } }
+            },
+            y: {
+                stacked: true,
+                grid: { display: false },
+                ticks: { color: '#8888a0', font: { size: 11 } }
+            }
+        },
+        plugins: {
+            legend: {
+                labels: { color: '#8888a0', font: { size: 11, family: 'Inter' }, usePointStyle: true, pointStyle: 'circle' }
+            },
+            tooltip: {
+                backgroundColor: '#262630',
+                titleColor: '#f0f0f5',
+                bodyColor: '#8888a0',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1,
+                cornerRadius: 8,
+            }
+        }
+    }
+});
+
+// ===== INTERACTIVE CHECKLIST =====
+document.querySelectorAll('.checklist-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+        item.classList.toggle('checked');
+    });
+});
+</script>
+
+</body>
+</html>

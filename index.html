@@ -1481,6 +1481,488 @@
             .ozon-price, .ozon-rating { display: none; }
         }
 
+        /* ===== CONFLICTS & HOLDINGS ===== */
+        .conflicts-wrap {
+            background: linear-gradient(135deg, rgba(239,68,68,0.06) 0%, rgba(251,146,60,0.04) 100%);
+            border: 1px solid rgba(239,68,68,0.18);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .conflicts-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .conflicts-head .ic {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(239,68,68,0.15);
+            color: #ef4444;
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .conflicts-head h3 {
+            font-family: 'Space Grotesk';
+            font-size: 1.3rem;
+            color: #ef4444;
+        }
+        .conflicts-wrap > p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .conflict-row {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr 1fr;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.85rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(239,68,68,0.1);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+        }
+        .conflict-row .our-sku {
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+        .conflict-row .flag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(239,68,68,0.12);
+            color: #ef4444;
+            display: inline-block;
+            margin-bottom: 0.3rem;
+        }
+        .conflict-row .their-sku {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+        .conflict-row .their-sku strong { color: var(--text-primary); }
+        .conflict-row .brand-pill {
+            font-size: 0.8rem;
+            color: var(--accent-coral);
+            font-weight: 600;
+        }
+        @media (max-width: 700px) {
+            .conflict-row { grid-template-columns: 1fr; }
+        }
+
+        .holdings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .holding-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .holding-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--gradient-hero);
+        }
+        .holding-card .h-num {
+            font-family: 'Space Grotesk';
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent-purple);
+            margin-bottom: 0.5rem;
+        }
+        .holding-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        .holding-card p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .holding-card p strong { color: var(--text-primary); }
+
+        /* ===== CHANNELS SECTION ===== */
+        .mp-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        .mp-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .mp-stat::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gradient-hero);
+        }
+        .mp-stat-val {
+            font-family: 'Space Grotesk';
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .mp-stat-lbl {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        /* LAVKA SPOTLIGHT */
+        .lavka-spotlight {
+            background: linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(255,107,107,0.08) 100%);
+            border: 1px solid rgba(168,85,247,0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+        }
+        .lavka-spotlight h3 {
+            font-family: 'Space Grotesk';
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .lavka-spotlight .sub {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.75rem;
+        }
+        .lavka-cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .lavka-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            position: relative;
+        }
+        .lavka-card.fills {
+            background: var(--gradient-hero);
+            border-color: transparent;
+            color: #fff;
+        }
+        .lavka-card .brand {
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.35rem;
+        }
+        .lavka-card .price {
+            font-family: 'Space Grotesk';
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 0.35rem;
+        }
+        .lavka-card.fills .price { color: #fff; }
+        .lavka-card .flavour {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .lavka-card.fills .flavour { color: rgba(255,255,255,0.85); }
+        .lavka-card .badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+            margin-bottom: 0.4rem;
+        }
+
+        /* CHANNEL RANKING */
+        .channel-rank {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 0.75rem;
+        }
+        .channel-rank-item {
+            display: grid;
+            grid-template-columns: 36px 1fr auto;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1.1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        .channel-rank-item.p-max { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.04); }
+        .channel-rank-item.p-high { border-color: rgba(251,146,60,0.25); background: rgba(251,146,60,0.03); }
+        .channel-rank-item.p-mid { border-color: var(--border); }
+        .channel-rank-item.p-low { opacity: 0.65; }
+        .channel-rank-num {
+            font-family: 'Space Grotesk';
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .channel-rank-name { font-weight: 600; font-size: 0.92rem; }
+        .channel-rank-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem; }
+        .channel-rank-prio {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+        }
+        .channel-rank-item.p-max .channel-rank-prio { background: rgba(239,68,68,0.15); color: #ef4444; }
+        .channel-rank-item.p-high .channel-rank-prio { background: rgba(251,146,60,0.15); color: #fb923c; }
+        .channel-rank-item.p-mid .channel-rank-prio { background: rgba(251,191,36,0.15); color: #fbbf24; }
+        .channel-rank-item.p-low .channel-rank-prio { background: rgba(156,163,175,0.15); color: #9ca3af; }
+
+        /* MATRIX — TABS & TABLES */
+        .mt-tabs-wrap { text-align: center; margin-bottom: 1.5rem; }
+        .mt-tabs {
+            display: inline-flex;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 4px;
+            gap: 2px;
+        }
+        .mt-tab {
+            background: transparent;
+            border: none;
+            padding: 0.55rem 1.3rem;
+            border-radius: 100px;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        .mt-tab:hover { color: var(--text-primary); }
+        .mt-tab.active {
+            background: var(--gradient-hero);
+            color: #fff;
+        }
+
+        .mt-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+        .mt-wrap::-webkit-scrollbar { height: 6px; }
+        .mt-wrap::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        .mt-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 860px;
+        }
+        .mt-table th, .mt-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .mt-table th {
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: var(--bg-card);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        .mt-table tr:last-child td { border-bottom: none; }
+        .mt-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+        .mt-table .mt-first {
+            min-width: 170px;
+            position: sticky;
+            left: 0;
+            background: var(--bg-card);
+            z-index: 2;
+        }
+        .mt-table .brand-cell {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            position: sticky;
+            left: 0;
+            background: var(--bg-card);
+            white-space: nowrap;
+        }
+        .mt-table tbody tr:hover .brand-cell { background: var(--bg-card-hover); }
+        .mt-table .brand-tier {
+            font-size: 0.64rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            font-weight: 500;
+            margin-top: 0.15rem;
+            text-transform: uppercase;
+        }
+
+        /* Rich online cells */
+        .mt-online .cell .dot {
+            display: inline-block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            margin-right: 0.45rem;
+            vertical-align: middle;
+        }
+        .mt-online .cell.d .dot { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.5); }
+        .mt-online .cell.s .dot { background: #fb923c; }
+        .mt-online .cell.p .dot { background: #fbbf24; }
+        .mt-online .cell.n .dot { background: rgba(255,255,255,0.15); }
+        .mt-online .cell .num {
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1;
+        }
+        .mt-online .cell.d .num { color: #ef4444; }
+        .mt-online .cell.s .num { color: #fb923c; }
+        .mt-online .cell.p .num { color: #fbbf24; }
+        .mt-online .cell.n .num { color: var(--text-muted); opacity: 0.6; font-weight: 500; }
+        .mt-online .cell .info {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            line-height: 1.3;
+        }
+
+        /* Offline compact dot cells */
+        .mt-offline .dot-cell {
+            text-align: center;
+            font-size: 1rem;
+            min-width: 60px;
+        }
+        .mt-offline .dot-cell.d { color: #ef4444; }
+        .mt-offline .dot-cell.s { color: #fb923c; }
+        .mt-offline .dot-cell.p { color: #fbbf24; }
+        .mt-offline .dot-cell.n { color: rgba(255,255,255,0.1); }
+        .mt-offline .dot-cell .dc-note {
+            display: block;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+
+        .matrix-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            justify-content: center;
+        }
+        .matrix-legend-item { display: flex; align-items: center; gap: 0.5rem; }
+        .matrix-legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+        /* Verdict list */
+        .verdict-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .verdict-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 80px;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.85rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        .verdict-row .v-channel {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .verdict-row .v-current {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+        .verdict-row .v-verdict {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .verdict-row .v-verdict.yes { background: rgba(52,211,153,0.15); color: var(--accent-green); }
+        .verdict-row .v-verdict.maybe { background: rgba(251,191,36,0.15); color: var(--accent-yellow); }
+
+        @media (max-width: 640px) {
+            .verdict-row { grid-template-columns: 1fr; }
+            .verdict-row .v-verdict { justify-self: start; }
+        }
+
+        /* Modal link styling */
+        .modal-link {
+            color: var(--accent-purple);
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(168,85,247,0.4);
+            transition: 0.2s;
+        }
+        .modal-link:hover {
+            color: var(--accent-pink);
+            border-bottom-color: var(--accent-pink);
+        }
+
+        @media (max-width: 960px) {
+            .mp-stats { grid-template-columns: repeat(2, 1fr); }
+            .lavka-cards { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .mp-stats { grid-template-columns: 1fr; }
+            .lavka-cards { grid-template-columns: 1fr; }
+        }
+
         /* ===== FOOTER ===== */
         .footer {
             text-align: center;
@@ -1541,10 +2023,11 @@
         <ul class="nav-links">
             <li><a href="#market">Рынок</a></li>
             <li><a href="#competitors">Конкуренты</a></li>
+            <li><a href="#channels">Каналы</a></li>
             <li><a href="#design">Дизайн</a></li>
             <li><a href="#lineup">Линейка</a></li>
             <li><a href="#economics">Экономика</a></li>
-            <li><a href="#roadmap">Дорожная карта</a></li>
+            <li><a href="#roadmap">Карта</a></li>
         </ul>
     </div>
 </nav>
@@ -1691,7 +2174,7 @@
 <section class="section" id="competitors">
     <div class="section-header fade-in">
         <div class="section-tag">Глубокий анализ рынка</div>
-        <h2 class="section-title">47 конкурентов · 4 tier'а</h2>
+        <h2 class="section-title">51 конкурент · 4 tier'а</h2>
         <p class="section-desc">Полный разбор российского рынка лимонадов на основе реальных данных Ozon и официальных источников. Кликай по карточкам — внутри детальный разбор.</p>
     </div>
 
@@ -1702,12 +2185,29 @@
         <div class="insights-strip" id="insightsStrip"></div>
     </div>
 
+    <!-- ПРЯМЫЕ КОНФЛИКТЫ С НАШИМИ SKU -->
+    <div class="conflicts-wrap fade-in">
+        <div class="conflicts-head">
+            <span class="ic">!</span>
+            <h3>Прямые конфликты с планируемой линейкой ФИЛЛС</h3>
+        </div>
+        <p>После прямых фетчей официальных сайтов 20+ брендов — 8 пересечений с нашими SKU. Самый болезненный: <strong style="color:var(--text-primary);">Клубника+Базилик (наш флагман) уже есть у Bakunin</strong>.</p>
+        <div id="conflictsList"></div>
+    </div>
+
+    <!-- ОТКРЫТИЯ ПО ХОЛДИНГАМ -->
+    <div class="fade-in" style="margin:3rem 0;">
+        <h3 style="font-family:'Space Grotesk';font-size:1.4rem;text-align:center;margin-bottom:0.5rem;">Критические открытия по холдингам</h3>
+        <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1.5rem;">Что выяснилось после систематической перепроверки</p>
+        <div class="holdings-grid" id="holdingsGrid"></div>
+    </div>
+
     <!-- TIER DISTRIBUTION CHART -->
     <div class="positioning-section fade-in" style="margin-bottom:3rem;padding:2rem;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;" class="tier-chart-row">
             <div>
                 <h3 style="font-family:'Space Grotesk';font-size:1.3rem;margin-bottom:0.75rem;">Распределение угроз</h3>
-                <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Из 47 конкурентов только <strong style="color:#ef4444;">5 — критические (Tier S)</strong>: Калиновъ, StarBar Craft, Lapochka, TimeOut, Vesna. Ещё <strong style="color:#fb923c;">9 — серьёзные (A)</strong>. Большинство — фон и косвенные игроки.</p>
+                <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Из 51 конкурента только <strong style="color:#ef4444;">5 — критические (Tier S)</strong>: Калиновъ, StarBar, Lapochka, TimeOut, Vesna. Ещё <strong style="color:#fb923c;">11 — серьёзные (A)</strong> включая Swag! и Classy. Большинство — фон и косвенные.</p>
                 <p style="color:var(--text-secondary);font-size:0.9rem;margin-top:0.75rem;">Приоритет по отстройке: только S+A. Остальные — мониторинг.</p>
             </div>
             <div style="position:relative;height:280px;"><canvas id="tierChart"></canvas></div>
@@ -1727,11 +2227,11 @@
         <h3 style="text-align:center;font-family:'Space Grotesk';font-size:1.5rem;margin-bottom:0.75rem;">Все конкуренты</h3>
         <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:2rem;">Фильтруй по уровню угрозы</p>
         <div class="tier-filters" id="tierFilters">
-            <div class="tier-chip active" data-tier="all">Все <span class="cnt" id="cnt-all">47</span></div>
+            <div class="tier-chip active" data-tier="all">Все <span class="cnt" id="cnt-all">51</span></div>
             <div class="tier-chip" data-tier="S">🔴 Tier S <span class="cnt">5</span></div>
-            <div class="tier-chip" data-tier="A">🟠 Tier A <span class="cnt">9</span></div>
-            <div class="tier-chip" data-tier="B">🟡 Tier B <span class="cnt">19</span></div>
-            <div class="tier-chip" data-tier="C">⚪ Tier C <span class="cnt">14</span></div>
+            <div class="tier-chip" data-tier="A">🟠 Tier A <span class="cnt">11</span></div>
+            <div class="tier-chip" data-tier="B">🟡 Tier B <span class="cnt">20</span></div>
+            <div class="tier-chip" data-tier="C">⚪ Tier C <span class="cnt">15</span></div>
         </div>
     </div>
 
@@ -1966,6 +2466,165 @@
             <div class="competitor-insight"><strong>Обход:</strong> Сопоставимая натуральность + бренд с характером + доступен по всей стране</div>
         </div>
     </div>
+
+<!-- ==================== МАРКЕТПЛЕЙСЫ И КАНАЛЫ ==================== -->
+<section class="section" id="channels">
+    <div class="section-header fade-in">
+        <div class="section-tag">Маркетплейсы и каналы продаж</div>
+        <h2 class="section-title">Где продавать ФИЛЛС</h2>
+        <p class="section-desc">Полный разбор 15 каналов: доли рынка, комиссии, матрица "конкурент × канал" и приоритеты выхода.</p>
+    </div>
+
+    <!-- BIG STATS -->
+    <div class="mp-stats fade-in">
+        <div class="mp-stat"><div class="mp-stat-val">95.5%</div><div class="mp-stat-lbl">Доля РФ-производителей газировки<br>(было 62.5% в 2022)</div></div>
+        <div class="mp-stat"><div class="mp-stat-val">67.2%</div><div class="mp-stat-lbl">Топ-5 маркетплейсов<br>от всего онлайн-рынка</div></div>
+        <div class="mp-stat"><div class="mp-stat-val">38%</div><div class="mp-stat-lbl">Wildberries — лидер<br>онлайн-рынка напитков</div></div>
+        <div class="mp-stat"><div class="mp-stat-val">16.24%</div><div class="mp-stat-lbl">Черноголовка —<br>доля рынка газировки Q1 2024</div></div>
+    </div>
+
+    <!-- MARKETPLACE SHARE + COMMISSIONS -->
+    <div class="positioning-section fade-in" style="margin-bottom:3rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;" class="mp-charts-row">
+            <div>
+                <h3 style="font-family:'Space Grotesk';font-size:1.3rem;margin-bottom:0.75rem;">Доли маркетплейсов</h3>
+                <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">WB и Ozon доминируют (66% вместе). Но Яндекс.Маркет недооценён — туда <strong style="color:var(--accent-purple);">низкая комиссия и мощный поисковый трафик</strong>.</p>
+                <div style="position:relative;height:280px;"><canvas id="mpShareChart"></canvas></div>
+            </div>
+            <div>
+                <h3 style="font-family:'Space Grotesk';font-size:1.3rem;margin-bottom:0.75rem;">Комиссии — Яндекс в 2-3 раза дешевле</h3>
+                <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">WB/Ozon: <strong>15-25%</strong> × 100,000 оборота = 15-25k руб. потерь. Яндекс.Маркет: <strong>5-9%</strong> × тот же оборот = 5-9k. Разница — десятки тысяч в месяц.</p>
+                <div style="position:relative;height:280px;"><canvas id="commissionChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЯНДЕКС.ЛАВКА SPOTLIGHT -->
+    <div class="lavka-spotlight fade-in">
+        <div class="section-tag" style="color:var(--accent-pink);">⭐ Главная ниша</div>
+        <h3>Яндекс.Лавка — только 4 крафт-бренда в Москве</h3>
+        <div class="sub">Категория не перенасыщена. Москва + МО = ЦА совпадает с нашей географией. Импульсные покупки — градиентная банка ФИЛЛС будет привлекать. <strong style="color:var(--text-primary);">ФИЛЛС может стать 5-м игроком в премиум-нише Лавки</strong>.</div>
+        <div class="lavka-cards">
+            <div class="lavka-card">
+                <div class="brand">Lemonardo</div>
+                <div class="price">119 ₽</div>
+                <div class="flavour">Original, Ginger Beer</div>
+            </div>
+            <div class="lavka-card">
+                <div class="brand">WildSoda</div>
+                <div class="price">129-149 ₽</div>
+                <div class="flavour">Грейпфрут-клубника, Лайм-манго</div>
+            </div>
+            <div class="lavka-card">
+                <div class="brand">Swag!</div>
+                <div class="price">79 ₽</div>
+                <div class="flavour">Имбирь, Гранат-Инжир, Смородина-Драгонфрут</div>
+            </div>
+            <div class="lavka-card">
+                <div class="brand">Classy</div>
+                <div class="price">129 ₽</div>
+                <div class="flavour">Базилик-Апельсин</div>
+            </div>
+            <div class="lavka-card fills">
+                <div class="badge">№5</div>
+                <div class="brand">ФИЛЛС</div>
+                <div class="price">85-110 ₽</div>
+                <div class="flavour">Наш заход: подмосковный крафт, градиент, 6 SKU</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ТОП-10 КАНАЛОВ ДЛЯ ФИЛЛС -->
+    <div class="fade-in" style="margin-bottom:3rem;">
+        <h3 style="text-align:center;font-family:'Space Grotesk';font-size:1.5rem;margin-bottom:0.5rem;">Рейтинг 15 каналов для ФИЛЛС</h3>
+        <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1.5rem;">От максимального приоритета к низкому</p>
+
+        <div class="positioning-section" style="margin-bottom:1.5rem;padding:2rem;">
+            <div style="position:relative;height:420px;"><canvas id="channelPriorityChart"></canvas></div>
+        </div>
+
+        <div class="channel-rank" id="channelRankList"></div>
+    </div>
+
+    <!-- МАТРИЦА С РЕАЛЬНЫМИ ДАННЫМИ -->
+    <div class="fade-in" style="margin-bottom:2rem;">
+        <h3 style="text-align:center;font-family:'Space Grotesk';font-size:1.5rem;margin-bottom:0.5rem;">Матрица "Конкурент × Канал" — реальные данные</h3>
+        <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1.5rem;">Конкретные цифры с Ozon, WB, Я.Маркета и Я.Лавки. Плюс присутствие в офлайн-сетях.</p>
+
+        <div class="mt-tabs-wrap">
+            <div class="mt-tabs">
+                <button class="mt-tab active" data-view="online">Онлайн-каналы · цифры</button>
+                <button class="mt-tab" data-view="offline">Офлайн-сети · присутствие</button>
+            </div>
+        </div>
+
+        <div class="mt-view" id="mtOnlineView">
+            <div class="mt-wrap"><table class="mt-table mt-online"><thead><tr>
+                <th class="mt-first">Бренд</th><th>Ozon</th><th>Wildberries</th><th>Я.Маркет</th><th>Я.Лавка</th>
+            </tr></thead><tbody id="mtOnlineBody"></tbody></table></div>
+        </div>
+
+        <div class="mt-view" id="mtOfflineView" style="display:none;">
+            <div class="mt-wrap"><table class="mt-table mt-offline"><thead><tr>
+                <th class="mt-first">Бренд</th><th>Пятёрочка</th><th>Магнит</th><th>Перекрёсток</th><th>Лента</th><th>ВкусВилл</th><th>Азбука</th><th>HoReCa</th>
+            </tr></thead><tbody id="mtOfflineBody"></tbody></table></div>
+        </div>
+
+        <div class="matrix-legend">
+            <div class="matrix-legend-item"><span class="matrix-legend-dot" style="background:rgba(239,68,68,0.45);"></span> Доминирует (>10k отзывов)</div>
+            <div class="matrix-legend-item"><span class="matrix-legend-dot" style="background:rgba(251,146,60,0.4);"></span> Сильное присутствие (1-10k)</div>
+            <div class="matrix-legend-item"><span class="matrix-legend-dot" style="background:rgba(251,191,36,0.35);"></span> Присутствует слабо</div>
+            <div class="matrix-legend-item"><span class="matrix-legend-dot" style="background:rgba(255,255,255,0.08);"></span> Нет / почти нет</div>
+        </div>
+    </div>
+
+    <!-- КЛЮЧЕВЫЕ ИНСАЙТЫ ИЗ МАТРИЦЫ -->
+    <div class="fade-in" style="margin-top:3.5rem;">
+        <h3 style="text-align:center;font-family:'Space Grotesk';font-size:1.5rem;margin-bottom:0.5rem;">Инсайты из матрицы</h3>
+        <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:2rem;">Чёрные дыры рынка · где ФИЛЛС может стать #1 · куда не лезть</p>
+
+        <!-- ГДЕ ФИЛЛС МОЖЕТ БЫТЬ #1 -->
+        <div class="positioning-section" style="margin-bottom:2rem;">
+            <h4 style="font-family:'Space Grotesk';font-size:1.15rem;margin-bottom:1rem;color:var(--accent-green);">Где ФИЛЛС может занять #1</h4>
+            <div class="verdict-list" id="verdictList"></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;">
+            <div class="card" style="border-left:3px solid var(--accent-green);">
+                <div class="card-glow"></div>
+                <h4 style="font-family:'Space Grotesk';font-size:1.05rem;margin-bottom:0.75rem;color:var(--accent-green);">Чёрные дыры рынка</h4>
+                <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;">
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-green);">+</span> Я.Лавка крафт-категория — только 4 бренда в МСК</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-green);">+</span> Магнит крафт — никто не зашёл кроме Funky Monkey</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-green);">+</span> HoReCa бары МО — пусто, кроме Drinksome</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-green);">+</span> Подмосковный современный крафт — Калиновъ из Дмитрова (ретро), современный никто</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:3px solid var(--accent-yellow);">
+                <div class="card-glow"></div>
+                <h4 style="font-family:'Space Grotesk';font-size:1.05rem;margin-bottom:0.75rem;color:var(--accent-yellow);">Недокручены по каналам</h4>
+                <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;">
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-yellow);">!</span> <strong style="color:var(--text-primary);">Lapochka</strong> — лидер Ozon, но ⚪ Я.Лавка (упустили премиум)</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-yellow);">!</span> <strong style="color:var(--text-primary);">Калиновъ</strong> — 37k Ozon, но слабо в Магните и Я.Лавке</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-yellow);">!</span> <strong style="color:var(--text-primary);">StarBar Craft</strong> — 8k Ozon, но ⚪ Я.Лавка (хотя премиум-крафт)</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-yellow);">!</span> <strong style="color:var(--text-primary);">TimeOut</strong> — везде слабо, работают через свой сайт + Ozon MIX</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:3px solid var(--accent-coral);">
+                <div class="card-glow"></div>
+                <h4 style="font-family:'Space Grotesk';font-size:1.05rem;margin-bottom:0.75rem;color:var(--accent-coral);">Куда НЕ лезть на старте</h4>
+                <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;">
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-coral);">×</span> Ozon Cola — крепость (Черноголовка 169k, Добрый 123k, Coca-Cola 88k)</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-coral);">×</span> WB массовая газировка — Fantola, Добрый, Черноголовка плотно сидят</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-coral);">×</span> Премиум-крафт на Я.Лавке в лоб — Lemonardo, WildSoda, Classy уже там (но мы дешевле — преимущество)</li>
+                    <li style="font-size:0.88rem;color:var(--text-secondary);padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent-coral);">×</span> ВкусВилл крафт — Lapochka доминирует, не воевать лоб в лоб</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- ==================== НИШИ ==================== -->
 <section class="section">
@@ -2699,6 +3358,66 @@ if (insightsStrip) {
     });
 }
 
+// ===== ПРЯМЫЕ КОНФЛИКТЫ =====
+const conflicts = [
+    { our: 'Клубника + Базилик', flag: 'ФЛАГМАН', their: '"Клубника и базилик"', brand: 'Bakunin Drinks (СПб)', info: 'есть в их 25-SKU линейке' },
+    { our: 'Грейпфрут + Розмарин', flag: 'ПРЯМОЙ', their: '"Grapefruit & Rosemary 2.0"', brand: 'Gypsy Queen / Sabotage (Пермь)', info: 'их флагман, версия 2.0' },
+    { our: 'Грейпфрут + Розмарин', flag: 'КОСВЕННЫЙ', their: '"Rosemary Pineapple"', brand: 'Classy (Москва)', info: 'розмарин с ананасом' },
+    { our: 'Клубника + Базилик', flag: 'КОСВЕННЫЙ', their: '"Basil Orange"', brand: 'Classy', info: 'базилик+апельсин' },
+    { our: 'Клубника + Базилик', flag: 'КОСВЕННЫЙ', their: '"Малина + Базилик"', brand: 'TimeOut', info: 'тот же базилик' },
+    { our: 'Лимон + Бузина', flag: 'ПРЯМОЙ', their: '"Цветы бузины"', brand: 'StarBar Craft (Сенежская)', info: 'ботаника premium' },
+    { our: 'Виноград + Крем-сода', flag: 'ПРЯМОЙ', their: 'Cabernet / Traminer + 6 миксов', brand: 'Абрау Vinonade', info: 'премиум стекло 0.375' },
+    { our: 'Личи + Роза', flag: 'ПРЯМОЙ', their: '"Розе" (вишня-апельсин-яблоко)', brand: 'Lapochka', info: 'алкогольная стилизация' },
+    { our: 'Личи + Роза', flag: 'КОСВЕННЫЙ', their: '"Личи + груша"', brand: 'Волчок', info: 'личи в основе' },
+];
+const conflictsList = document.getElementById('conflictsList');
+if (conflictsList) {
+    conflicts.forEach(function(c) {
+        const row = el('div', 'conflict-row');
+        row.appendChild(el('div', 'our-sku', c.our));
+        const mid = document.createElement('div');
+        mid.appendChild(el('span', 'flag', c.flag));
+        const ts = el('div', 'their-sku');
+        renderBold(c.their.replace(/^"(.+)"$/, '**$1**'), ts);
+        if (c.info) {
+            ts.appendChild(document.createElement('br'));
+            const small = document.createElement('span');
+            small.style.fontSize = '0.75rem';
+            small.style.color = 'var(--text-muted)';
+            small.textContent = c.info;
+            ts.appendChild(small);
+        }
+        mid.appendChild(ts);
+        row.appendChild(mid);
+        row.appendChild(el('div', 'brand-pill', '→ ' + c.brand));
+        conflictsList.appendChild(row);
+    });
+}
+
+// ===== ОТКРЫТИЯ ПО ХОЛДИНГАМ =====
+const holdings = [
+    { n: 'ХОЛДИНГ 01', title: 'Fantola принадлежит Черноголовке', body: 'Не АЯН из Хакасии, как писалось ранее. "Аквалайф" владеет **169k + 10k+ отзывов** через два бренда.' },
+    { n: 'ХОЛДИНГ 02', title: 'Калиновъ + SEVER = один завод', body: '"Фонте Аква ПК" в Дмитрове (МО). **61k+ отзывов суммарно** у нашего географического соседа.' },
+    { n: 'ОТКРЫТИЕ 03', title: 'Абрау зашла в коктейли', body: 'Pina Colada, Aperitif Spritz, Bellini — безалкогольные коктейли. Заходит на территорию **Drinksome**.' },
+    { n: 'ОТКРЫТИЕ 04', title: 'Rich — 33 SKU, не 4-5', body: 'Целая экосистема Multon: соки, мини-соки, **тоники (конкурент Evervess и SEVER)**, кола, коктейли, чаи.' },
+    { n: 'ОТКРЫТИЕ 05', title: 'Lapochka — алкогольные стилизации + CBD', body: 'Просекко, Розе, Рислинг (имитация вин) + **Груша-CBD** + коллабы Beglu. 18 SKU — полноценная экосистема.' },
+    { n: 'ОТКРЫТИЕ 06', title: 'Bakunin — 25 SKU с коллабами', body: 'Пивоварня × коктейль-бар. Коллабы с **художниками, DJ, лейблами**. В линейке есть Клубника+Базилик.' },
+    { n: 'ОТКРЫТИЕ 07', title: 'Bombbar — 13 SKU, цена 68-94 ₽', body: 'Актуальные цены с сайта бренда. Функциональный лимонад с витаминами B1-B12, минералами.' },
+    { n: 'ОТКРЫТИЕ 08', title: 'Натахтари — 17+ SKU', body: 'Было "10 классических", реально: **Барбарис, Фейхоа, Имбирь, Мандарин** и больше.' },
+];
+const holdingsGrid = document.getElementById('holdingsGrid');
+if (holdingsGrid) {
+    holdings.forEach(function(h) {
+        const card = el('div', 'holding-card');
+        card.appendChild(el('div', 'h-num', h.n));
+        card.appendChild(el('h4', null, h.title));
+        const p = el('p');
+        renderBold(h.body, p);
+        card.appendChild(p);
+        holdingsGrid.appendChild(card);
+    });
+}
+
 // ===== TIER DISTRIBUTION CHART =====
 const tierCanvas = document.getElementById('tierChart');
 if (tierCanvas) {
@@ -2707,7 +3426,7 @@ if (tierCanvas) {
         data: {
             labels: ['Tier S — критичные', 'Tier A — серьёзные', 'Tier B — фоновые', 'Tier C — косвенные'],
             datasets: [{
-                data: [5, 9, 19, 14],
+                data: [5, 11, 20, 15],
                 backgroundColor: ['#ef4444', '#fb923c', '#fbbf24', 'rgba(156,163,175,0.4)'],
                 borderColor: '#16161f', borderWidth: 3, hoverOffset: 8
             }]
@@ -2811,9 +3530,9 @@ if (ozonList) {
 const competitors = [
     // ====== TIER S ======
     { id: 'kalinov', tier: 'S', name: 'Калиновъ Лимонадъ', sub: 'Фонте Аква ПК · Дмитров, МО', reviews: 37268, price: '~100 руб./0.5 л стекло',
-      facts: ['Захватил "ретро + Ъ" (37k отзывов)', 'Прямой сосед по МО'],
-      producer: 'ООО "Фонте Аква ПК", Дмитров, МО. Дистрибьютор: АО "Калинов Родник". Сайты: kalinov-vintage.ru, kalinovlemonade.ru. Премиальная линейка "Винтажный" + массовая "Калинов Лимонад".',
-      lineup: ['Классический', 'Тархун', 'Манго', 'Клубника', 'Груша', 'Дыня', 'Арбуз', 'Сибирские травы (уникальная позиция)', '"Домашний"', 'Форматы: 0.2 / 0.5 / 1 / 2 л — стекло для премиум + ПЭТ для массовки'],
+      facts: ['Захватил "ретро + Ъ" (37k отзывов)', 'Прямой сосед по МО · 14 SKU'],
+      producer: 'ООО "Фонте Аква ПК", Дмитров, МО. Дистрибьютор: АО "Калинов Родник". Сайты: kalinov-vintage.ru, kalinovlemonade.ru. Премиальная линейка "Винтажный" + массовая "Калинов Лимонад". 🚨 Тот же завод делает SEVER — суммарно 61k+ отзывов.',
+      lineup: ['14 SKU в линейке "Калиновъ Винтажный" — все в дореформенной орфографии (Ъ, І):', 'ДОМАШНІЙ', 'КЛАССИЧЕСКІЙ', 'АПЕЛЬСИНЪ', 'АРБУЗЪ', 'ГРУША', 'ДЫНЯ', 'ИГРИСТЫЙ', 'КЛУБНИКА', 'МАНГО', 'СИБИРСКІЕ ТРАВЫ (уникально)', 'ТАРХУНЪ', 'ФЕЙХОА (уникально)', 'ЧЕРЕШНЯ', 'ЧЁРНАЯ СМОРОДИНА', 'Форматы: 0.2 / 0.5 / 1 / 2 л — стекло для премиум + ПЭТ для массовки'],
       design: 'Стеклянная бутылка с РЕЛЬЕФНЫМ ТИСНЕНИЕМ (embossing). Дореволюционная стилизация: вензеля, особняк, "Рецепты 1897 года". Жёлтое стекло для Манго — цвет проявляется через содержимое. Фирменный шрифт с "Ъ". Соответствие ГОСТ.',
       threat: 'КРИТИЧЕСКАЯ. Лидер категории по узнаваемости. 37k отзывов = миллионы покупок. Уже захватили "русский ретро-нарратив с Ъ". Сибирские травы близко к нашему Иван-чай.',
       strategy: 'НЕ использовать "Ъ" в ФИЛЛС (оставить ТОЛЬКО для пивного ЛыткаринЪ). Позиционировать как анти-Калиновъ: современный минимализм, банка (не стекло), эмоция (не история).',
@@ -2829,9 +3548,9 @@ const competitors = [
       sources: 'senegskaya.ru/catalog/CRAFT, ozon.ru, av.ru'
     },
     { id: 'lapochka', tier: 'S', name: 'Lapochka', sub: 'Аша, Челябинская обл. · lapochka.team', reviews: 15326, price: '~150 руб./банка · MIX 133 руб.',
-      facts: ['14 авторских вкусов, без сахара', 'Госзаказы (ЯНАО), коллаба с Т-Банком'],
-      producer: 'Lapochka, г. Аша (Челябинская область). "Натуральные лимонады без сахара, красителей, подсластителей, консервантов и ароматизаторов". Активный Instagram @lapochka.drinks. ЯНАО планирует совместную линейку.',
-      lineup: ['Грейпфрут + Лимон', 'Манго + Чили (мы планировали!)', 'Арбуз + Мелисса (планировали Арбуз+Мята)', 'Дыня + Мята (планировали)', 'Груша + Имбирь (в волне 2!)', 'Персик + Вербена', 'Гранат + Ромашка', 'Ананас + Личи', 'Рислинг (вкус белого вина)', 'Pineapple + Kaffir Lime', 'Guava + Kaffir Lime', 'Watermelon + Melissa', 'Mango + Chili'],
+      facts: ['18 SKU, без сахара · алкогольные стилизации + CBD', 'Госзаказы (ЯНАО), коллаба с Т-Банком'],
+      producer: 'Lapochka, г. Аша (Челябинская область). "Натуральные лимонады без сахара, красителей, подсластителей, консервантов и ароматизаторов". Активный Instagram @lapochka.drinks. ЯНАО планирует совместную линейку. 🚨 Полноценная экосистема — не просто лимонад.',
+      lineup: ['Основная линейка (10 натуральных авторских):', 'Грейпфрут-лимон', 'Дыня-мята', 'Гуава-каффир-лайм', 'Манго-чили', 'Ананас-личи', 'Арбуз-мелисса', 'Персик-вербена', 'Малина-гранат-ромашка (Mirage)', 'Дыня-клубника-лемонграсс', 'Яблоко', 'Алкогольные стилизации (имитация вин):', 'Просекко (виноград-яблоко-клубника)', '🚨 Розе (вишня-апельсин-яблоко) — конкурент Личи+Роза', 'Рислинг (виноград-яблоко)', 'Эксперименты:', 'Вишня-кола', 'Функциональные:', 'Груша-CBD (содержит CBD!)', 'Персик-маракуйя (с витаминами)', 'Коллаборации с Beglu:', 'Лаванда-бергамот', 'Кардамон-лимон'],
       design: 'Минималистичный, светлый. Цветовое кодирование по вкусам (пастельные тона). Современный wellness-стиль. Очень похож на то, что планирует ФИЛЛС. MIX 20 шт.: 2657 руб. (15,326 отзывов!). Коллаборация с Т-Банком.',
       threat: 'КРИТИЧЕСКАЯ — это уже существующий ФИЛЛС. Натуральный + без сахара + необычные вкусы + современный дизайн + на всех каналах. 15k+ отзывов на MIX (наша планируемая киллер-фича). Почти вся волна 2 уже у них.',
       strategy: 'Цена ФИЛЛС 65-85 руб. vs Lapochka 150 руб. — в 2 раза дешевле. Дистрибуция в Пятёрочку/Магнит (массовый канал). Уникальные вкусы: Клубника+Базилик, Виноград+Крем-сода — у них нет. Нарратив: Лыткарино + ИТМО + 260 рецептов. Дизайн: градиенты + grain + spot UV.',
@@ -2857,37 +3576,56 @@ const competitors = [
     },
 
     // ====== TIER A ======
+    { id: 'swag', tier: 'A', name: 'Swag!', sub: 'ATARDO · atardo.com', reviews: null, price: '79-87 руб./0.33 л банка',
+      facts: ['🆕 Прямо в нашей ценовой зоне', 'Яркий поп-арт, 7 авторских вкусов'],
+      producer: 'ATARDO (Россия). "Крафтовый лимонад на натуральной основе. Яркий, насыщенный микс крафтовых лимонадов на основе натуральных соков". atardo.com/company/brands/swag',
+      lineup: ['Актуальная линейка (апрель 2026):', 'Чёрная смородина + Драгонфрут', 'Мохито (новинка)', 'Маракуйя + Малина', 'Киви + Фейхоа', 'Манго + Кокос', 'Гранат + Инжир', 'Личи + Мангостин'],
+      design: 'Банка 0.33 л (наш формат). На Ozon упаковка 12 шт. = 1040 руб. → ~87 руб./банка (Личи-Мангостин). На Лавке ~79 руб. Каналы: Wildberries, Ozon, Яндекс.Лавка, atardo.com, Ярче!, Детский мир, Parhato, KeyFood, региональная розница.',
+      threat: 'КРИТИЧЕСКАЯ. Прямой конкурент в нашей ценовой зоне. Та же категория (крафт натуральный), та же цена (79-87 руб.), тот же формат (банка 0.33 л), авторские вкусы — как у нас.',
+      strategy: 'Дизайн — у Swag! ярко-кислотный поп-арт vs наш градиентный минимализм. Нарратив: Лыткарино + ИТМО + 260 рецептов. Свой набор вкусов (Клубника+Базилик, Виноград+Крем-сода — у Swag! нет).',
+      sources: 'atardo.com, irecommend.ru, yarcheplus.ru, detmir.ru'
+    },
+    { id: 'classy', tier: 'A', name: 'Classy', sub: 'classysoda.ru', reviews: null, price: '129 руб./0.33 л (Лавка)',
+      facts: ['🆕 9 SKU · конфликт с нами по базилику И розмарину', 'Matcha, Yerba Mate, Saган Дали + функциональные'],
+      producer: 'Classy. classysoda.ru. "Крафтовые лимонады из натуральных соков и экстрактов. Без сахара, без ароматизаторов, без красителей". 🚨 Серьёзный конкурент в крафт-нише, у них и базилик, и розмарин.',
+      lineup: ['9 SKU (апрель 2026):', 'Matcha Mango — манго+лимон + японский Матча', 'Matcha Yuzu — юдзу+ананас+лимон + Матча', 'Tiger Cola — юдзу+яблоко+лимон + фенхель+корица+гвоздика', 'Strawberry Lemongrass — клубника+лимон + лемонграсс+вербена', '🚨 Rosemary Pineapple — конфликт с Грейпфрут+Розмарин', 'Sagan Dali — яблоко+лимон + экстракт саган дайля', 'Yerba Mate — яблоко+лимон + йерба мате', '🚨 Basil Orange (Базилик+Апельсин) — конфликт с Клубника+Базилик', 'Sedative Isotonic — функциональный (седативный комплекс)'],
+      design: 'Банка/бутылка 0.33 л. 8 г углеводов / 100 мл, 30 ккал / 100 мл. Срок годности 12 месяцев. Без сахара, ароматизаторов, консервантов. Каналы: Ozon, Yandex Market, Яндекс.Лавка (129 руб.), бары/кафе, специализированные магазины (РусБир).',
+      threat: 'ВЫСОКАЯ. Прямой конкурент по концепту. Уже имеет Базилик+Апельсин — очень близко к нашему Клубника+Базилик. Но они премиум (129 руб.), мы массовый (65-85).',
+      strategy: 'Цена в 1.5-2 раза ниже. Дизайн с глубиной (gradient + grain). Нарратив завода. В нашем флагмане Клубника (не Апельсин) — отстройка по основному фрукту.',
+      sources: 'classysoda.ru, rusbeershop.ru'
+    },
+    // ====== TIER A (продолжение) ======
     { id: 'abrau', tier: 'A', name: 'Абрау Vinonade', sub: 'Абрау-Дюрсо', reviews: 12890, price: '~197 руб./0.375 л стекло',
-      facts: ['6 виноградных миксов', 'С консервантами — наша возможность'],
-      producer: 'Абрау-Дюрсо (известный винный завод). Концепт Vinonade = безалкогольная альтернатива игристому, на винограде. abrau.ru/collection/bezalkogolnye-napitki/vinonady',
-      lineup: ['2 классических: Cabernet (смородина, ежевика, слива, фиалка) и Traminer (личи, лепестки розы) + Zero версии', 'Ананас + Виноград', 'Манго + Виноград', 'Вишня + Виноград', 'Черешня + Виноград (12k отзывов на Ozon)'],
+      facts: ['6 виноградных миксов + коктейли', 'С консервантами — наша возможность'],
+      producer: 'Абрау-Дюрсо (известный винный завод). Концепт Vinonade = безалкогольная альтернатива игристому, на винограде. abrau.ru/collection/bezalkogolnye-napitki/vinonady. 🚨 Новое: заходят в категорию безалкогольных коктейлей (на территорию Drinksome).',
+      lineup: ['Классические виноградные:', 'Cabernet (смородина, ежевика, слива, фиалка)', 'Traminer (личи, лепестки розы)', '+ Zero версии (без сахара)', 'Фруктово-виноградные миксы:', 'Ананас + Виноград', 'Манго + Виноград', 'Вишня + Виноград', 'Черешня + Виноград (12k отзывов)', '🆕 Безалкогольные коктейли (новая линейка):', 'Pina Colada', 'Aperitif Spritz', 'Bellini'],
       design: 'Стекло 0.375 л. Бутылка стилизована под Бордо. Винтовая крышка. Акварельные иллюстрации фруктов. В составе Манго+Виноград есть сахар, ароматизаторы и КОНСЕРВАНТЫ (сорбат калия, бензоат натрия). Маркетинг лучше состава.',
       threat: 'СРЕДНЯЯ-ВЫСОКАЯ. Прямой конкурент по виноградным вкусам. В 2-3 раза дороже ФИЛЛС. Стекло 375 мл vs наша банка 330 мл — разные форматы.',
       strategy: 'Виноград+Крем-соду оставить — мы массовая ниша, они премиум. На банке выделять "БЕЗ КОНСЕРВАНТОВ" — это работает против Абрау.',
       sources: 'abrau.ru, abraudurso.ru'
     },
     { id: 'ochakovo', tier: 'A', name: 'Очаково Мохито Fresh', sub: 'Концерн Очаково', reviews: 15852, price: '96 руб./0.45 л',
-      facts: ['Пивзавод-гигант → лимонад', 'Не идти в Мохито — забито'],
-      producer: 'Концерн Очаково (один из крупнейших пивзаводов РФ) — модель "пивзавод → лимонад", как у нас. ochakovo.ru/en/brand/moxito-osvezhayushhij',
-      lineup: ['Классический (освежающий мохито) — лайм + мята', 'Клубничный (15k отзывов)', 'Манго', 'Гранатовый'],
+      facts: ['Пивзавод-гигант → лимонад', 'На сайте — только 2 SKU'],
+      producer: 'Концерн Очаково (один из крупнейших пивзаводов РФ) — модель "пивзавод → лимонад", как у нас. ochakovo.ru/en/brand/moxito-osvezhayushhij. ⚠️ Ранее ошибочно приписывали 4 SKU — на сайте только 2.',
+      lineup: ['2 SKU (актуально с сайта):', 'Освежающий (классический мохито: лайм + мята)', 'Освежающий Черника-Голубика', 'Форматы: банка 0.45 л (96₽), бутылка 0.5/1 л, упаковки 12 шт.'],
       design: 'Банка 0.45 л (96 руб), бутылка 0.5/1 л, упаковки 12 шт. Вода, сахар, сок лайма, натуральные ароматизаторы, антоциан (экстракт чёрной моркови), гуммиарабик. Без консервантов. 45 ккал/100 мл, 8.5% сока.',
       threat: 'ВЫСОКАЯ. Очаково — гигант с дистрибуцией везде. Ниша "освежающий" работает (15k отзывов на одном вкусе). Цена 96 руб. — на верхней границе нашей зоны.',
       strategy: 'Не делать "Мохито" — этот вкус у Очаково забит. Брать другие свежие вкусы (Огурец+Мята, Арбуз+Мята).',
       sources: 'ochakovo.ru, dixy.ru'
     },
     { id: 'volchok', tier: 'A', name: 'Волчок', sub: 'Волковская Пивоварня · СПб', reviews: 12157, price: '91 руб./0.45 л чёрная бутылка',
-      facts: ['Модель "пивзавод → лимонад" работает', 'Чёрная бутылка + маскот-волк'],
+      facts: ['Модель "пивзавод → лимонад" · 8 SKU', 'Коллаба с ДОДО + Кола в линейке'],
       producer: 'Волковская Пивоварня (СПб) — модель "пивзавод → лимонад", как у ЛыткаринЪ. volchok.top, wolfsshop.ru. Слоган: "Для тех, кто жаждет творческого вдохновения".',
-      lineup: ['Грейпфрут + гибискус', 'Манго + кокос', 'Личи + груша', 'Персик', 'Арбуз (12k отзывов)', 'Линейка обновляется — "не повторяемся"'],
+      lineup: ['8 SKU (актуально):', 'Грейпфрут + гибискус', 'Манго + кокос', 'Личи + груша (конкурент нашей Личи+Роза)', 'Персик', 'Арбуз (12k отзывов)', 'Цитрус микс', 'Кола (Волчок Cola)', 'Коллаба: Арбуз-Лайм с ДОДО'],
       design: 'Чёрная стеклянная бутылка 0.45 л (не банка). Маскот: волк-граффити с зубастой пастью. Рукописный шрифт. Дерзкий, молодёжный, стритовый. Каждый вкус = свой цвет жидкости + цветной акцент на этикетке.',
       threat: 'ВЫСОКАЯ — успешная модель "пивзавод → лимонад". Волковская показала, что пивоварня + крафтовый лимонад = 12k отзывов. ЛыткаринЪ — тоже пивзавод.',
       strategy: 'Учиться у Волчка как пример успеха. Не повторять (маскот, чёрная бутылка) — наша эстетика другая. Пересмотреть Личи+Розу — у них есть Личи+груша.',
       sources: 'volchok.top, wolfsshop.ru'
     },
-    { id: 'bombbar', tier: 'A', name: 'Bombbar', sub: 'Спортпит-бренд', reviews: 28431, price: '~102 руб./0.33 л банка',
-      facts: ['28k отзывов — функциональный сегмент', 'Урок для ФИЛЛС Focus/Calm'],
+    { id: 'bombbar', tier: 'A', name: 'Bombbar', sub: 'Спортпит-бренд', reviews: 28431, price: '68-94 руб./банка 0.33',
+      facts: ['28k отзывов — функциональный сегмент', '13 SKU · цены 68-94₽ (в нашей зоне)'],
       producer: 'Известный производитель спортивного питания. Позиционирование: "Низкокалорийный лимонад без сахара с витаминами". bombbar.ru',
-      lineup: ['Арбуз (28k отзывов)', 'Яблоко (28k)', 'Дюшес', 'Кола', 'Мохито', 'Ананас', 'Арбуз Лёд', 'Тархун', 'Яблоко + Лемонграсс', 'Имбирь + Лемонграсс'],
+      lineup: ['13 SKU (актуально с сайта бренда):', 'Арбуз (28k отзывов)', 'Яблоко (28k)', 'Дюшес', 'Кола', 'Мохито', 'Ананас', 'Арбуз Лёд (Watermelon Ice)', 'Тархун', 'Яблоко + Лемонграсс', 'Имбирь + Лемонграсс', '+ другие SKU', 'Цены 68-94 руб./банка 0.33 — прямо в нашей ценовой зоне'],
       design: '1 ккал на порцию (330 мл). Подсластитель сукралоза. Витамины E, A, D, K, C, B1-B12. Минералы: цитрат магния, цинка. ПЭТ 500 мл (основной), банка 330 мл. Карточка на Ozon: 28,431 отзыв, зелёный фон, инфографика.',
       threat: 'ВЫСОКАЯ в функциональном сегменте, но это другая категория: Bombbar — спортпит, ФИЛЛС — крафтовый лимонад.',
       strategy: 'Функциональная ниша работает (28k отзывов). Позже сделать "ФИЛЛС FIT" или "Focus/Calm" как отдельную суб-линейку. На старте НЕ идти.',
@@ -2921,9 +3659,9 @@ const competitors = [
       sources: 'lemonardo.ru'
     },
     { id: 'bakunin', tier: 'A', name: 'Bakunin Drinks', sub: 'Пивоварня Bakunin · СПб', reviews: 2433, price: '140-300 руб./шт. · MIX 989 руб.',
-      facts: ['Модель "пивоварня × бар"', 'Органика, премиум'],
-      producer: 'Коллаборация пивоварни Bakunin (СПб) и коктейль-бара Imbibe — модель "пивзавод → лимонад". Состав: свежевыжатые соки, фруктовые пюре, авторские кордиалы. Органика. bakunindrinks.com',
-      lineup: ['Яблоко + укроп', 'Гуава + бергамот', 'Жасмин + груша', 'Лайм + молочный улун', 'Иван-чай + мята', 'Коллабы: Karelia (лесные ягоды + можжевельник), DJ Lady Walks (личи + лемонграсс)'],
+      facts: ['🚨 25 SKU — включая Клубника+Базилик (наш флагман!)', 'Коллабы с художниками, DJ, лейблами'],
+      producer: 'Коллаборация пивоварни Bakunin (СПб) и коктейль-бара Imbibe — модель "пивзавод → лимонад". Состав: свежевыжатые соки, фруктовые пюре, авторские кордиалы. Органика. bakunindrinks.com. 🚨 25 SKU — целая экосистема с коллабами.',
+      lineup: ['25 SKU включая флагман-конфликт:', '🚨 Клубника + Базилик — ПРЯМОЙ КОНФЛИКТ с нашим флагманом', 'Яблоко + укроп', 'Гуава + бергамот', 'Жасмин + груша', 'Лайм + молочный улун', 'Иван-чай + мята', 'Коллабы:', 'Karelia (лесные ягоды + можжевельник)', 'DJ Lady Walks (личи + лемонграсс)', 'Коллаборации с художниками, DJ, музыкальными лейблами — много лимиток'],
       design: 'Премиальная стеклянная бутылка/банка. Минималистичный, "scandinavian". MIX — пастельные банки. Каналы: Ozon (Bakunin Botanicals), WB, Yandex.Market, HoReCa Москва/СПб.',
       threat: 'СРЕДНЯЯ. Сильнее по премиальности и аутентичности (реальный бар + пивоварня). Цена в 2-3 раза выше ФИЛЛС, аудитория узкая.',
       strategy: 'Bakunin показывает, что модель "пивоварня → лимонады" работает. Это ровно то, что делает ЛыткаринЪ.',
@@ -2940,6 +3678,16 @@ const competitors = [
     },
 
     // ====== TIER B ======
+    { id: 'wildsoda', tier: 'B', name: 'WildSoda', sub: 'wildsoda.ru', reviews: null, price: '129-149 руб./0.33 л',
+      facts: ['🆕 Только фрукты и вода', 'Премиум на Яндекс.Лавке'],
+      producer: 'wildsoda.ru. "Натуральные лимонады без сахара. В меру сладкие, насыщенного цвета без красителей". Состав: только фрукты и вода.',
+      lineup: ['Апельсин + Маракуйя', 'Красный Апельсин + Ананас', 'Грейпфрут + Красный Апельсин + Горные травы', 'Мандарин + Гранат'],
+      design: 'Бутылки 330 мл. На Лавке 129-149 руб./бутылка. На Ozon упаковки 3 шт. = 155 руб./шт. Каналы: Яндекс.Лавка (8 наименований в Москве), Ozon, Ламбада-маркет, курьер Москва.',
+      threat: 'СРЕДНЯЯ-ВЫСОКАЯ. Премиум-натуральный (129-149 руб.), мы — средний. Они "только фрукты" — мы можем отстроиться травами/цветами. Оба работают через Яндекс.Лавку.',
+      strategy: 'Цена в 1.5-2 раза ниже. Авторские необычные вкусы (Клубника+Базилик, Виноград+Крем-сода). Не только фрукты, но и травы.',
+      sources: 'wildsoda.ru, vlavke.ru, lmbd.ru, ozon.ru'
+    },
+    // ====== TIER B (продолжение) ======
     { id: 'chernogolovka', tier: 'B', name: 'Черноголовка', sub: 'ЗАО Аквалайф · МО · 1942', reviews: 169236, price: '60-100 руб.',
       facts: ['169k отзывов — абсолютный лидер', 'Другая категория: ретро-классика'],
       producer: 'ЗАО "Аквалайф", г. Черноголовка, МО. Основана 1942. Топ-5 производителей, 100+ млн литров/год.',
@@ -2950,17 +3698,17 @@ const competitors = [
       sources: 'aqualife.ru, ozon.ru'
     },
     { id: 'dobriy', tier: 'B', name: 'Добрый', sub: 'Multon Partners (ex Coca-Cola)', reviews: 123758, price: '55-87 руб.',
-      facts: ['Тотальное присутствие', 'Воспринимается как "замена"'],
-      producer: 'Multon Partners (выкупили российский бизнес Coca-Cola). Заводы в Москве, СПб, Екатеринбурге, Новосибирске, Ростове. Крупнейший игрок.',
-      lineup: ['Кола, Кола Ваниль, Кола без сахара, Лимон-Лайм, Апельсин, Манго-Маракуйя, Лесные ягоды, Мохито, Груша, Дюшес, Барбарис, Тархун — 10+ SKU', 'Банка 330 мл, ПЭТ 0.5-2 л, стекло 330 мл (HoReCa)'],
+      facts: ['Тотальное присутствие · 3 линейки', '⚠️ НЕТ Тархуна/Мохито/Манго-Маракуйи!'],
+      producer: 'Multon Partners (выкупили российский бизнес Coca-Cola). Заводы в Москве, СПб, Екатеринбурге, Новосибирске, Ростове. Крупнейший игрок. Сайты: dobry.ru, multonpartners.ru.',
+      lineup: ['Линейка "Добрый® Лимонады" (dobry.ru — 4 SKU):', 'Сибирские травы (терпкий вкус)', 'Дюшес (груша)', 'Лимонад (классический)', 'Вишня', 'Линейка "Добрый Cola" (замена Coca-Cola):', 'Cola Classic', 'Cola Ванильный', 'Cola без сахара', 'Cola Ледяной лимон (новинка 2025)', 'Киви-виноград (новинка 2025)', 'Линейка "Современные вкусы":', 'Лимон-Лайм (замена Sprite)', 'Апельсин (замена Fanta)', 'Форматы: банка 330 мл, ПЭТ 0.5-2 л, стекло 330 мл (HoReCa)', '⚠️ У Доброго НЕТ Тархуна, Мохито, Манго-Маракуйи, Барбариса, Лесных ягод — это у других брендов'],
       design: 'Корпоративный масс-маркет. Красный/зелёный/оранжевый. Мягкий скруглённый шрифт. Высокий shelf impact.',
       threat: 'Масс-маркет, тотальное присутствие. 123k отзывов на Коле.',
       strategy: 'Уникальное позиционирование (крафт, локальность), авторские вкусы, молодёжная аудитория.',
       sources: 'multonpartners.ru'
     },
-    { id: 'fantola', tier: 'B', name: 'Fantola', sub: 'РФ бренд с 2019', reviews: null, price: '55-75 руб.',
-      facts: ['Кислотный дизайн для зумеров', 'TikTok-маркетинг + лимитки'],
-      producer: 'Российский бренд с 2019-2020. Молодёжный, дерзкий. ЦА 14-25.',
+    { id: 'fantola', tier: 'B', name: 'Fantola', sub: 'Аквалайф · Черноголовка', reviews: null, price: '55-75 руб.',
+      facts: ['🚨 Принадлежит Черноголовке (Аквалайф)', 'Холдинг держит 169k+10k+ отзывов'],
+      producer: '🚨 Новое открытие: Fantola принадлежит ЗАО "Аквалайф" — тому же холдингу, что и Черноголовка (не АЯН из Хакасии). Это значит один холдинг владеет 169k+10k+ отзывов через два бренда. Появился 2019-2020. Молодёжный, дерзкий. ЦА 14-25.',
       lineup: ['Citrus, Bubble Gum, Mango, Cola, Birthday Cake, Strawberry Cream, Space Cowboy, Maracuja, Mystery — 8-10 SKU'],
       design: 'Кислотный поп-арт. Неоновые цвета. Латиница. Очень высокий shelf impact — "кричит". Минусы: "по-детски" для 25+.',
       threat: 'Фоновая — разная ЦА.',
@@ -2977,9 +3725,9 @@ const competitors = [
       sources: 'laimonfresh.ru'
     },
     { id: 'freshbar', tier: 'B', name: 'Fresh Bar', sub: 'Global Functional Drinks Rus · 2012', reviews: 9261, price: '59-62 руб./0.48 л',
-      facts: ['15 SKU, фантазийные названия', 'Эконом, Fix Price'],
+      facts: ['19 SKU · + отдельная линейка Cola', 'Эконом, Fix Price'],
       producer: 'Global Functional Drinks Rus. С 2013 под российским управлением. Бренд основан 2012.',
-      lineup: ['Alfa Cola, Asian Dream, Asian Mix, Citrus Ice, Coco Nutty, Double Funny, Jelly Bears, Kiwi Mix, Magic Skills, Merry Berry, Melonade, Mojito, Orange Blast, Sparkling Boom, Tropic Topic — 15 SKU'],
+      lineup: ['14 основных SKU: Alfa Cola, Asian Dream, Asian Mix, Citrus Ice, Coco Nutty, Double Funny, Jelly Bears, Kiwi Mix, Magic Skills, Merry Berry, Melonade Mojito (один SKU, не два), Orange Blast, Sparkling Boom, Tropic Topic', '+ 5 SKU отдельной линейки "Cola by Fresh Bar" с экзотикой: Dragon Fruit, Banana, Vanilla — конкурент Coca-Cola и Добрый Cola'],
       design: 'Бутылка 0.48 л (нестандартный объём). Fix Price 59 руб. На Ozon 744 руб./12 = 62 руб./шт.',
       threat: 'Средняя. Масс-маркет, не крафт.',
       strategy: 'Разные ниши. ФИЛЛС — крафтовый, Fresh Bar — массовая газировка.',
@@ -3013,9 +3761,9 @@ const competitors = [
       sources: 'drinksome.ru'
     },
     { id: 'ascania', tier: 'B', name: 'Ascania', sub: 'ООО "Аскания"', reviews: null, price: '65-110 руб. стекло',
-      facts: ['Натуральные соки, стекло', '"Тихий" бренд'],
-      producer: 'ООО "Аскания". "Лимонады на натуральных соках", средний+ сегмент.',
-      lineup: ['Тархун, Дюшес, Мохито, Манго-Маракуйя, Лимон-Имбирь, Вишня, Клюква, Апельсин, Тоник — 8-10 SKU. Стекло 0.5/0.33 л'],
+      facts: ['Натуральные соки, стекло · 10 SKU', 'Корректный список (исправлено)'],
+      producer: 'ООО "Аскания". "Лимонады на натуральных соках", средний+ сегмент. ⚠️ Ранее ошибочно писал Тархун/Мохито/Манго-Маракуйя — этих вкусов у них нет.',
+      lineup: ['10 SKU (корректный список):', 'Лимон', 'Клубника', 'Груша', 'Вишня', 'Лайм+Мята', 'Лесные ягоды', 'Гранат', 'Яблоко', 'Тархун', 'Стекло 0.5/0.33 л'],
       design: 'Элегантный "европейский". Пастельные тона, белый/кремовый, латиница.',
       threat: 'Фоновая. Узкая дистрибуция, слабый маркетинг.',
       strategy: 'Аналогичное качество + агрессивный маркетинг + сильная история.',
@@ -3048,10 +3796,10 @@ const competitors = [
       strategy: 'Готовность к "алгоритмической дискриминации" СТМ Ozon. Wildberries становится важнее. Работа с Azbuka Вкуса, ВкусВилл.',
       sources: 'ozon.ru'
     },
-    { id: 'rich', tier: 'B', name: 'Rich', sub: 'Multon Partners', reviews: null, price: '100+ руб.',
-      facts: ['Та же компания что "Добрый"', 'Премиум-корпорат'],
-      producer: 'Multon Partners (та же, что "Добрый"). Бренд с 2002. Премиум-линейка. rich-drinks.ru',
-      lineup: ['Банка 0.33 л. Вкусы: Манго, Клубника, Мандарин, Апельсин'],
+    { id: 'rich', tier: 'B', name: 'Rich', sub: 'Multon Partners · 33 SKU', reviews: null, price: '100+ руб.',
+      facts: ['🚨 33 SKU — целая экосистема', 'Тоники конкурируют с Evervess и SEVER'],
+      producer: 'Multon Partners (та же компания, что "Добрый"). Бренд с 2002. Не просто премиум-лимонады — целая экосистема из 33 SKU. rich-drinks.ru',
+      lineup: ['33 SKU (по категориям):', 'Соки и мини-соки', 'Тоники (конкуренты Evervess и SEVER)', 'Кола (конкурент Coca-Cola и Добрый Cola)', 'Коктейли', 'Чаи', 'Лимонады (Манго, Клубника, Мандарин, Апельсин)'],
       design: '"Устрой себе Rich". Основной продукт — премиальные соки, лимонады — дополнение.',
       threat: 'Средняя.',
       strategy: 'ФИЛЛС — крафтовый, Rich — премиум-корпоративный.',
@@ -3076,21 +3824,21 @@ const competitors = [
       sources: 'ayan.ru'
     },
     { id: 'jaws', tier: 'B', name: 'Spot Soda / Jaws', sub: 'Jaws Brewery · Екатеринбург', reviews: null, price: 'Крафт',
-      facts: ['Хмелевой характер', '"Пивзавод → лимонад"'],
-      producer: 'Крафтовая пивоварня Jaws Brewery. Безалкогольная газировка, но с хмелевым характером.',
-      lineup: ['Цедра с пшеничными нотками хмеля', 'Имбирь + бергамот + мёд', 'Манго + маракуйя + мята', 'Абрикос + молочный улун'],
+      facts: ['Только 1 SKU — Hoppy Lemon', '"Пивзавод → лимонад"'],
+      producer: 'Крафтовая пивоварня Jaws Brewery. ⚠️ Было ошибочно приписано 4 вкуса — реально только 1 SKU (Hoppy Lemon). Остальные приписанные вкусы — это Gypsy Queen/Sabotage.',
+      lineup: ['Hoppy Lemon — единственный SKU', 'Безалкогольная газировка с хмелевым характером'],
       design: 'Маркетплейсы.',
       threat: 'Средняя. Та же модель "пивоварня → лимонад". Узкая ниша (хмелевые).',
       strategy: 'У нас другая эстетика (градиенты, не хмель).',
       sources: 'jawsbrewery.ru'
     },
     { id: 'sabotage', tier: 'B', name: 'Gypsy Queen / Sabotage', sub: 'Sabotage · Пермь', reviews: null, price: 'Крафт',
-      facts: ['Яркая упаковка в банках', 'Региональный'],
-      producer: 'Пермская пивоварня Sabotage.',
-      lineup: ['Имбирь + бергамот + мёд', 'Манго + маракуйя + мята', 'Абрикос + молочный улун'],
-      design: 'Яркая упаковка в банках.',
-      threat: 'Низкая-средняя.',
-      strategy: 'Не прямой конкурент.',
+      facts: ['🚨 "Grapefruit & Rosemary 2.0" — конфликт', 'Пивзавод → лимонад'],
+      producer: 'Пермская пивоварня Sabotage. Линейка Gypsy Queen — крафтовые лимонады. Модель "пивзавод → лимонад".',
+      lineup: ['🚨 Grapefruit & Rosemary 2.0 — ПРЯМОЙ КОНФЛИКТ с нашим Грейпфрут+Розмарин (их флагман, версия 2.0)', 'Другие авторские вкусы', 'Яркая упаковка в банках'],
+      design: 'Яркая упаковка в банках. Пивоварня СГЭО-стиля.',
+      threat: 'СРЕДНЯЯ. Прямой конфликт по Грейпфрут+Розмарин — у них это флагман.',
+      strategy: 'Пересмотреть Грейпфрут+Розмарин или акцентировать другую отстройку (регион МО, массовая цена).',
       sources: 'sabotage-brewery.ru'
     },
     { id: 'kultura', tier: 'B', name: 'Kultura', sub: 'Санкт-Петербург', reviews: null, price: 'Средний',
@@ -3113,6 +3861,16 @@ const competitors = [
     },
 
     // ====== TIER C ======
+    { id: 'econad', tier: 'C', name: 'ЭКОНАД', sub: 'eco-nad.ru', reviews: null, price: 'Премиум',
+      facts: ['🆕 Единственный на молочной сыворотке', 'Функциональный с травами'],
+      producer: 'eco-nad.ru. "Первый в России лимонад на молочной сыворотке". УТП: уникальная категория — сывороточный газированный напиток на травах.',
+      lineup: ['ЭКОНАД Стройность — для контроля веса', 'ЭКОНАД Вкус Счастья', 'ЭКОНАД Иммунитет — с травами (липа, эхинацея, саган-дайля, ревень, бузина)'],
+      design: 'Банка 0.33 л, бутылка 0.5 л. Состав: вода, сывороточный концентрат (пермеат из молочного сырья) с лактозой + витамины B, A, E, калий, кальций, магний, фосфор, цинк, пробиотические бактерии + сироп топинамбура + лимонная кислота + натуральный ароматизатор + экстракты растений. Каналы: Ozon (брендовая категория), ВкусВилл (Иммунитет), Дикси (Стройность), СберМаркет, Yandex.Market.',
+      threat: 'НИЗКАЯ. Другая категория (молочно-сывороточная газировка с функциональностью). Но интересно как пример уникального функционального позиционирования.',
+      strategy: 'Инсайт: уникальная функциональная ниша работает. Травяные купажи — рабочий приём для дифференциации (взять на заметку для "ФИЛЛС Focus/Calm").',
+      sources: 'eco-nad.ru, crispy.news, vkusvill.ru, dixy.ru'
+    },
+    // ====== TIER C (продолжение) ======
     { id: 'evervess', tier: 'C', name: 'Evervess', sub: 'PepsiCo', reviews: 88809, price: '60-80 руб.',
       facts: ['Тоники-миксеры — другая категория', '88k отзывов'],
       producer: 'PepsiCo. Ниша: тоники и миксеры.',
@@ -3159,9 +3917,9 @@ const competitors = [
       sources: 'sanpellegrino.com'
     },
     { id: 'natahtari', tier: 'C', name: 'Натахтари', sub: 'Грузия · импорт', reviews: null, price: '149-160 руб./0.5 л',
-      facts: ['Грузинская ностальгия', '10 классических вкусов'],
-      producer: 'Натахтари (Грузия). "Настоящий грузинский лимонад".',
-      lineup: ['Тархун, Дюшес, Апельсин, Сливки, Саперави, Груша, Яблоко, Малина, Лимон + Мята, Белый виноград'],
+      facts: ['Грузинская ностальгия', '17+ SKU (больше чем писалось)'],
+      producer: 'Натахтари (Грузия). "Настоящий грузинский лимонад". ⚠️ Ранее указывал 10 SKU — реально 17+.',
+      lineup: ['17+ SKU включая:', 'Тархун, Дюшес, Апельсин, Сливки, Саперави, Груша, Яблоко, Малина, Лимон+Мята, Белый виноград', '+ Барбарис, Фейхоа, Имбирь, Мандарин и другие', 'Стекло 0.5 л'],
       design: 'Стекло 0.5 л: 149-160 руб. Упаковка 20 шт.: ~110 руб./шт.',
       threat: 'Низкая (разная категория).',
       strategy: 'Не пересекается.',
@@ -3332,13 +4090,40 @@ function openModal(id) {
     meta.appendChild(document.createTextNode(c.sub + ' · ' + c.price));
     modalContent.appendChild(meta);
 
-    modalContent.appendChild(buildSection('Производитель', el('p', null, c.producer)));
+    // Auto-linkify: find domain-like tokens and turn into <a> links
+    function linkify(str, parent) {
+        const urlPattern = /((?:https?:\/\/)?(?:[a-zA-Z0-9-]+\.)+(?:ru|com|org|net|team|top|su|io|biz|store|info|pro|academy|news|shop)(?:\/[^\s,)]*)?)/gi;
+        const matches = Array.from(str.matchAll(urlPattern));
+        if (matches.length === 0) { parent.appendChild(document.createTextNode(str)); return; }
+        let cursor = 0;
+        matches.forEach(function(m) {
+            const idx = m.index;
+            if (idx > cursor) parent.appendChild(document.createTextNode(str.slice(cursor, idx)));
+            const token = m[0];
+            const href = token.startsWith('http') ? token : 'https://' + token;
+            const a = document.createElement('a');
+            a.href = href;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'modal-link';
+            a.textContent = token;
+            parent.appendChild(a);
+            cursor = idx + token.length;
+        });
+        if (cursor < str.length) parent.appendChild(document.createTextNode(str.slice(cursor)));
+    }
+
+    const producerP = el('p');
+    linkify(c.producer, producerP);
+    modalContent.appendChild(buildSection('Производитель', producerP));
 
     const ul = el('ul');
     c.lineup.forEach(function(l) { ul.appendChild(el('li', null, l)); });
     modalContent.appendChild(buildSection('Линейка и форматы', ul));
 
-    modalContent.appendChild(buildSection('Дизайн и каналы', el('p', null, c.design)));
+    const designP = el('p');
+    linkify(c.design, designP);
+    modalContent.appendChild(buildSection('Дизайн и каналы', designP));
 
     const threatBox = el('div', 'modal-threat');
     threatBox.appendChild(el('p', null, c.threat));
@@ -3351,7 +4136,7 @@ function openModal(id) {
     const srcP = el('p');
     srcP.style.color = 'var(--text-muted)';
     srcP.style.fontSize = '0.8rem';
-    srcP.textContent = c.sources;
+    linkify(c.sources, srcP);
     modalContent.appendChild(buildSection('Источники', srcP));
 
     modalBackdrop.classList.add('open');
@@ -3367,6 +4152,331 @@ function closeModal() {
 if (modalClose) modalClose.addEventListener('click', closeModal);
 if (modalBackdrop) modalBackdrop.addEventListener('click', function(e) { if (e.target === modalBackdrop) closeModal(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+// ===== MARKETPLACE SHARE CHART =====
+const mpShareCanvas = document.getElementById('mpShareChart');
+if (mpShareCanvas) {
+    new Chart(mpShareCanvas.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Wildberries', 'Ozon', 'Яндекс.Маркет', 'Megamarket', 'Другие'],
+            datasets: [{
+                data: [38, 28, 12, 6, 16],
+                backgroundColor: ['#a855f7', '#60a5fa', '#fbbf24', '#34d399', 'rgba(255,255,255,0.1)'],
+                borderColor: '#16161f', borderWidth: 3, hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '60%',
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#8888a0', font: { size: 11, family: 'Inter' }, padding: 10, usePointStyle: true, pointStyle: 'circle' } },
+                tooltip: {
+                    backgroundColor: '#262630', titleColor: '#f0f0f5', bodyColor: '#8888a0',
+                    borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, cornerRadius: 8, padding: 12,
+                    callbacks: { label: function(c) { return ' ' + c.label + ': ' + c.raw + '%'; } }
+                }
+            }
+        }
+    });
+}
+
+// ===== COMMISSION CHART =====
+const commCanvas = document.getElementById('commissionChart');
+if (commCanvas) {
+    new Chart(commCanvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Wildberries', 'Ozon', 'Megamarket', 'Яндекс.Маркет', 'Яндекс.Лавка'],
+            datasets: [
+                { label: 'Мин. комиссия %', data: [15, 15, 10, 5, 0], backgroundColor: 'rgba(52,211,153,0.55)', borderRadius: 6, stack: 's' },
+                { label: 'Доп. к макс %', data: [10, 10, 10, 4, 0], backgroundColor: 'rgba(239,68,68,0.4)', borderRadius: 6, stack: 's' }
+            ]
+        },
+        options: {
+            indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#8888a0', font: { size: 10, family: 'Inter' }, usePointStyle: true, pointStyle: 'circle' } },
+                tooltip: {
+                    backgroundColor: '#262630', titleColor: '#f0f0f5', bodyColor: '#8888a0',
+                    borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, cornerRadius: 8, padding: 12,
+                    callbacks: {
+                        label: function(c) {
+                            const ranges = ['15-25%', '15-25%', '10-20%', '5-9%', 'партнёрская'];
+                            return ' ' + ranges[c.dataIndex];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { stacked: true, grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#555570', callback: function(v) { return v + '%'; } } },
+                y: { stacked: true, grid: { display: false }, ticks: { color: '#8888a0', font: { size: 11 } } }
+            }
+        }
+    });
+}
+
+// ===== ТОП-15 КАНАЛОВ ДЛЯ ФИЛЛС =====
+const channelRanking = [
+    { n: 1, name: 'Яндекс.Лавка', sub: 'Только 4 крафт-бренда в МСК · импульс', prio: 'МАКС', cls: 'p-max', score: 10 },
+    { n: 2, name: 'Магнит', sub: 'Пустая зона для крафта · гигантский объём', prio: 'МАКС', cls: 'p-max', score: 10 },
+    { n: 3, name: 'Wildberries', sub: '38% онлайн-рынка · слабые карточки конкурентов', prio: 'ВЫСОКИЙ', cls: 'p-high', score: 9 },
+    { n: 4, name: 'Яндекс.Маркет', sub: 'Комиссия 5-9% + 70% поиска РФ', prio: 'ВЫСОКИЙ', cls: 'p-high', score: 9 },
+    { n: 5, name: 'Перекрёсток (X5)', sub: 'Целевая премиум-средняя полка', prio: 'ВЫСОКИЙ', cls: 'p-high', score: 8 },
+    { n: 6, name: 'Пятёрочка (X5)', sub: 'Молодёжная полка освободилась после VK', prio: 'ВЫСОКИЙ', cls: 'p-high', score: 8 },
+    { n: 7, name: 'Лента', sub: 'Гипермаркет — легче войти', prio: 'ВЫСОКИЙ', cls: 'p-high', score: 8 },
+    { n: 8, name: 'Ozon', sub: 'Объём есть, но Ozon Fresh = СТМ-угроза', prio: 'СРЕДНИЙ', cls: 'p-mid', score: 7 },
+    { n: 9, name: 'Самокат / Купер', sub: 'Аналог Лавки · быстрая доставка', prio: 'СРЕДНИЙ', cls: 'p-mid', score: 6 },
+    { n: 10, name: 'HoReCa бары/рестораны', sub: 'Имидж + маржа 150-300%', prio: 'СРЕДНИЙ', cls: 'p-mid', score: 6 },
+    { n: 11, name: 'ВкусВилл', sub: 'Lapochka доминирует — встать рядом', prio: 'СРЕДНИЙ', cls: 'p-mid', score: 5 },
+    { n: 12, name: 'Megamarket', sub: 'Растёт, но меньше трафика', prio: 'НИЗКИЙ', cls: 'p-low', score: 4 },
+    { n: 13, name: 'Азбука Вкуса', sub: 'Имидж · узкая ЦА', prio: 'НИЗКИЙ', cls: 'p-low', score: 4 },
+    { n: 14, name: 'Дикси, Верный', sub: 'Локальные сети МО · стартовая площадка', prio: 'НИЗКИЙ', cls: 'p-low', score: 3 },
+    { n: 15, name: 'Cash & Carry (Метро)', sub: 'Опт для HoReCa · малые объёмы', prio: 'НИЗКИЙ', cls: 'p-low', score: 3 },
+];
+
+const priorityCanvas = document.getElementById('channelPriorityChart');
+if (priorityCanvas) {
+    new Chart(priorityCanvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: channelRanking.map(function(c) { return c.n + '. ' + c.name; }),
+            datasets: [{
+                label: 'Приоритет (1-10)',
+                data: channelRanking.map(function(c) { return c.score; }),
+                backgroundColor: channelRanking.map(function(c) {
+                    if (c.cls === 'p-max') return 'rgba(239,68,68,0.75)';
+                    if (c.cls === 'p-high') return 'rgba(251,146,60,0.7)';
+                    if (c.cls === 'p-mid') return 'rgba(251,191,36,0.6)';
+                    return 'rgba(156,163,175,0.35)';
+                }),
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#262630', titleColor: '#f0f0f5', bodyColor: '#8888a0',
+                    borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, cornerRadius: 8, padding: 12,
+                    callbacks: {
+                        label: function(c) {
+                            const item = channelRanking[c.dataIndex];
+                            return [' Приоритет: ' + item.prio + ' (' + item.score + '/10)', ' ' + item.sub];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { min: 0, max: 10, grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#555570', font: { size: 10 }, stepSize: 2 } },
+                y: { grid: { display: false }, ticks: { color: '#8888a0', font: { size: 11 } } }
+            }
+        }
+    });
+}
+
+const channelRankList = document.getElementById('channelRankList');
+if (channelRankList) {
+    channelRanking.forEach(function(c) {
+        const row = el('div', 'channel-rank-item ' + c.cls);
+        row.appendChild(el('div', 'channel-rank-num', String(c.n)));
+        const main = el('div');
+        main.appendChild(el('div', 'channel-rank-name', c.name));
+        main.appendChild(el('div', 'channel-rank-sub', c.sub));
+        row.appendChild(main);
+        row.appendChild(el('div', 'channel-rank-prio', c.prio));
+        channelRankList.appendChild(row);
+    });
+}
+
+// ===== МАТРИЦА КОНКУРЕНТ × КАНАЛ (реальные данные) =====
+// Статусы: d=доминирует, s=сильное присутствие, p=слабое присутствие, n=нет
+// Каждый бренд: { name, tier, ozon/wb/market/lavka: {s, num?, info?}, off: {pyat, magnit, perekr, lenta, vkus, azbuka, horeca} }
+const matrixBrands = [
+    { name: 'Черноголовка', tier: 'Tier B · Q1 2024: 16.24%',
+      ozon:{s:'d',num:'169k',info:'60-80₽ · Cola 0.33'}, wb:{s:'d',num:'~8k+',info:'упак. 6×2л Байкал'}, market:{s:'s',num:'4.5+',info:'разные SKU'}, lavka:{s:'n'},
+      off:{pyat:'d',magnit:'d',perekr:'d',lenta:'d',vkus:'p',azbuka:'p',horeca:'s'} },
+    { name: 'Добрый', tier: 'Tier B · Multon',
+      ozon:{s:'d',num:'123k',info:'87₽ · Cola 0.33'}, wb:{s:'d',num:'~5k+',info:'упак. 12-24 шт.'}, market:{s:'s',num:'47-100₽',info:'разные форматы'}, lavka:{s:'p',info:'есть'},
+      off:{pyat:'d',magnit:'d',perekr:'d',lenta:'d',vkus:'n',azbuka:'n',horeca:'d',horecaNote:'Вкусно и т.'} },
+    { name: 'Калиновъ Лимонадъ', tier: 'Tier S · Дмитров МО',
+      ozon:{s:'d',num:'37k',info:'100₽ · стекло 0.5'}, wb:{s:'s',info:'Дыня Винтаж 500мл'}, market:{s:'s',num:'★5.0',info:'64₽ Апельсин'}, lavka:{s:'n'},
+      off:{pyat:'p',magnit:'p',perekr:'s',lenta:'p',vkus:'n',azbuka:'n',horeca:'p'} },
+    { name: 'Bombbar', tier: 'Tier A · спортпит',
+      ozon:{s:'d',num:'28k',info:'102₽ · банка 0.33'}, wb:{s:'s',num:'73k',info:'на бренд (вкл. батончики)'}, market:{s:'s',info:'12×0.33 Имбирь+Лемонграсс'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'p',perekr:'p',lenta:'p',vkus:'p',azbuka:'n',horeca:'n',horecaNote:'фитнес'} },
+    { name: 'SEVER', tier: 'Tier A · Фонте Аква МО',
+      ozon:{s:'d',num:'24k',info:'107₽ · 2 л'}, wb:{s:'s',info:'есть'}, market:{s:'p',info:'ограниченно'}, lavka:{s:'n'},
+      off:{pyat:'p',magnit:'p',perekr:'s',lenta:'p',vkus:'n',azbuka:'n',horeca:'n'} },
+    { name: 'Очаково Мохито', tier: 'Tier A · Очаково',
+      ozon:{s:'d',num:'15k',info:'96₽ · 0.45 л'}, wb:{s:'s',info:'mohito-ochakovo'}, market:{s:'s',num:'★4.9',info:'3.7к куплено · 79 оценок'}, lavka:{s:'n'},
+      off:{pyat:'d',magnit:'d',perekr:'d',lenta:'d',vkus:'n',azbuka:'n',horeca:'p'} },
+    { name: 'Borjomi Limonati', tier: 'Tier B · премиум импорт',
+      ozon:{s:'d',num:'15k',info:'156₽ · Цитрус'}, wb:{s:'p',info:'ограниченно'}, market:{s:'s',num:'★4.9',info:'12 оценок · 12×0.5 стекло'}, lavka:{s:'p',info:'есть'},
+      off:{pyat:'p',magnit:'n',perekr:'s',lenta:'p',vkus:'s',azbuka:'s',horeca:'s'} },
+    { name: 'Lapochka', tier: 'Tier S · Аша Челяб.',
+      ozon:{s:'s',num:'15.3k',info:'MIX 20 · 150-178₽'}, wb:{s:'s',info:'6 шт. 1068₽ · Т-Банк коллаб'}, market:{s:'s',num:'181₽',info:'банка 0.33'}, lavka:{s:'n',info:'упустили!'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'p',vkus:'d',vkusNote:'доминирует',azbuka:'p',horeca:'p',horecaNote:'кафе'} },
+    { name: 'Абрау Vinonade', tier: 'Tier A · Абрау-Дюрсо',
+      ozon:{s:'s',num:'12k',info:'197₽ · стекло 0.375'}, wb:{s:'p',info:'есть'}, market:{s:'s',num:'139-191₽',info:'бутылка 0.375'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'n',perekr:'s',lenta:'s',vkus:'p',azbuka:'s',horeca:'s',horecaNote:'рестораны'} },
+    { name: 'Волчок', tier: 'Tier A · Волковская СПб',
+      ozon:{s:'s',num:'12k',info:'91₽ · стекло 0.45'}, wb:{s:'p',info:'есть'}, market:{s:'s',num:'47-65₽',info:'12 шт. Манго-Кокос 571₽'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'p',magnitNote:'с 07.2023',perekr:'p',lenta:'p',vkus:'n',azbuka:'n',horeca:'p',horecaNote:'бары'} },
+    { name: 'Laimon Fresh', tier: 'Tier B',
+      ozon:{s:'s',num:'9k',info:'73-90₽ · 12-уп. 871₽'}, wb:{s:'p',info:'есть'}, market:{s:'s',num:'★4.3-4.6',info:'разные SKU'}, lavka:{s:'n'},
+      off:{pyat:'s',magnit:'s',perekr:'s',lenta:'s',vkus:'n',azbuka:'n',horeca:'p',horecaNote:'миксер'} },
+    { name: 'Fresh Bar', tier: 'Tier B',
+      ozon:{s:'s',num:'9k',info:'62₽ · 0.48 в 12-уп. 744₽'}, wb:{s:'p',info:'есть'}, market:{s:'s',num:'★4.8',info:'Pina Colada 480мл'}, lavka:{s:'n'},
+      off:{pyat:'s',pyatNote:'Fix Price',magnit:'s',perekr:'p',lenta:'s',vkus:'n',azbuka:'n',horeca:'n'} },
+    { name: 'StarBar Craft', tier: 'Tier S · Сенежская',
+      ozon:{s:'s',num:'8k',info:'123₽ · стекло 12 шт. 1479₽'}, wb:{s:'p',info:'есть'}, market:{s:'s',info:'Грейпфрут+Малина 12×0.33'}, lavka:{s:'n',info:'упустили!'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'p',lentaNote:'Метро',vkus:'p',azbuka:'s',horeca:'p'} },
+    { name: 'Sanpellegrino', tier: 'Tier C · Италия',
+      ozon:{s:'s',num:'4k',info:'175₽ · банка 0.33'}, wb:{s:'p',info:'импорт'}, market:{s:'s',info:'разные'}, lavka:{s:'p',info:'есть'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'p',vkus:'p',azbuka:'s',horeca:'s'} },
+    { name: 'Lemonardo', tier: 'Tier A · Award 2022',
+      ozon:{s:'s',num:'3k',info:'144₽ · MIX 12 шт. 1730₽'}, wb:{s:'p',info:'есть'}, market:{s:'s',info:'разные SKU'}, lavka:{s:'s',num:'119₽',info:'Original · Ginger Beer'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'p',vkus:'p',azbuka:'p',horeca:'p'} },
+    { name: 'Drinksome', tier: 'Tier B · коктейли',
+      ozon:{s:'s',num:'3k',info:'218₽ · 8-уп. 1746₽'}, wb:{s:'p',info:'есть'}, market:{s:'p',info:'ограниченно'}, lavka:{s:'p',info:'есть'},
+      off:{pyat:'n',magnit:'n',perekr:'n',lenta:'n',vkus:'n',azbuka:'s',horeca:'d',horecaNote:'бары'} },
+    { name: 'Bakunin Drinks', tier: 'Tier A · пивов. СПб',
+      ozon:{s:'s',num:'2.4k',info:'165₽ · 6-уп. MIX 989₽'}, wb:{s:'p',info:'140-300₽ разные'}, market:{s:'p',info:'ограниченно'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'n',vkus:'p',azbuka:'s',horeca:'s',horecaNote:'бары СПб/МСК'} },
+    { name: 'Funky Monkey', tier: 'Tier A · ТД Перспектива',
+      ozon:{s:'s',info:'разные'}, wb:{s:'s',num:'800+',info:'на хитах'}, market:{s:'s',num:'★4.8',info:'164 отз. Craazy 0.45 12 шт. · 70₽/шт.'}, lavka:{s:'n'},
+      off:{pyat:'s',pyatNote:'Fix Price',magnit:'s',magnitNote:'с 07.2023',perekr:'p',lenta:'p',vkus:'n',azbuka:'n',horeca:'n'} },
+    { name: 'Ozon Fresh', tier: 'Tier B · СТМ Ozon',
+      ozon:{s:'d',num:'1.9k',info:'159₽ · Шорли 0.45'}, wb:{s:'n',info:'нет — это СТМ Ozon'}, market:{s:'n'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'n',perekr:'n',lenta:'n',vkus:'n',azbuka:'n',horeca:'n'} },
+    { name: 'Fantola', tier: 'Tier B · РФ 2019',
+      ozon:{s:'s',info:'десятки тыс. отзывов'}, wb:{s:'d',num:'10k+',info:'Bubble Gum · Mango — лидер'}, market:{s:'s',num:'55-75₽',info:'разные'}, lavka:{s:'n'},
+      off:{pyat:'s',magnit:'s',perekr:'s',lenta:'s',vkus:'n',azbuka:'n',horeca:'n'} },
+    { name: 'Натахтари', tier: 'Tier C · Грузия',
+      ozon:{s:'p',num:'110-160₽',info:'стекло 0.5'}, wb:{s:'p',info:'есть'}, market:{s:'p',num:'149-160₽',info:'стекло 0.5'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'p',magnitNote:'Метро',perekr:'p',lenta:'p',vkus:'p',azbuka:'s',horeca:'s',horecaNote:'груз. рестораны'} },
+    { name: 'Swag! 🆕', tier: 'Tier A · ATARDO',
+      ozon:{s:'p',num:'87₽',info:'12-уп. 1040₽'}, wb:{s:'p',info:'есть'}, market:{s:'p',info:'ограниченно'}, lavka:{s:'s',num:'79₽',info:'Имбирь · Гранат-Инжир · Смородина-Драгонфрут'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'p',lentaNote:'Ярче! · Метро',vkus:'n',azbuka:'p',horeca:'p'} },
+    { name: 'Classy 🆕', tier: 'Tier A',
+      ozon:{s:'p',info:'разные'}, wb:{s:'p',info:'ограниченно'}, market:{s:'p',info:'Базилик-Апельсин'}, lavka:{s:'s',num:'129₽',info:'Базилик-Апельсин'},
+      off:{pyat:'n',magnit:'n',perekr:'n',lenta:'p',vkus:'n',azbuka:'p',horeca:'s',horecaNote:'бары'} },
+    { name: 'WildSoda 🆕', tier: 'Tier B',
+      ozon:{s:'p',num:'155₽',info:'3 шт. · 52₽/шт.'}, wb:{s:'n',info:'слабо'}, market:{s:'p',num:'129-149₽'}, lavka:{s:'s',num:'129-149₽',info:'Грейпфрут-клубника · Лайм-манго'},
+      off:{pyat:'n',magnit:'n',perekr:'n',lenta:'n',vkus:'n',azbuka:'p',horeca:'p'} },
+    { name: 'TimeOut', tier: 'Tier S',
+      ozon:{s:'p',info:'MIX 20 шт.'}, wb:{s:'n',info:'слабо'}, market:{s:'n',info:'ограниченно'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'n',perekr:'n',lenta:'n',vkus:'n',azbuka:'n',horeca:'p'} },
+    { name: 'Vesna', tier: 'Tier S · Ижевск',
+      ozon:{s:'s',info:'разные'}, wb:{s:'s',info:'есть'}, market:{s:'p',info:'ограниченно'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'p',vkus:'p',azbuka:'p',horeca:'p'} },
+    { name: 'Шуйские ягоды', tier: 'Tier B · Ивановская обл.',
+      ozon:{s:'p',info:'разные'}, wb:{s:'p',info:'есть'}, market:{s:'p',info:'ограниченно'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'n',vkus:'p',azbuka:'p',horeca:'n'} },
+    { name: 'ЭКОНАД 🆕', tier: 'Tier C · сыворотка',
+      ozon:{s:'s',info:'разные'}, wb:{s:'p',info:'есть'}, market:{s:'p',info:'есть'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'p',magnitNote:'Дикси',perekr:'n',lenta:'p',vkus:'s',azbuka:'p',horeca:'n'} },
+    { name: 'Coca-Cola', tier: 'Tier C · импорт',
+      ozon:{s:'d',num:'88k',info:'117₽ · Classic 0.33'}, wb:{s:'s',info:'есть'}, market:{s:'p',info:'парал. импорт'}, lavka:{s:'p',info:'есть'},
+      off:{pyat:'n',magnit:'n',perekr:'p',lenta:'p',vkus:'n',azbuka:'p',horeca:'p'} },
+    { name: 'Dr.Pepper Cherry', tier: 'Tier C · импорт',
+      ozon:{s:'s',num:'9.4k',info:'139₽ · Cherry 0.33'}, wb:{s:'p',info:'есть'}, market:{s:'p',info:'парал. импорт'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'n',perekr:'n',lenta:'n',vkus:'n',azbuka:'n',horeca:'n'} },
+    { name: 'Evervess', tier: 'Tier C · PepsiCo',
+      ozon:{s:'d',num:'88.8k',info:'разные'}, wb:{s:'s',info:'есть'}, market:{s:'p',info:'есть'}, lavka:{s:'p',info:'есть'},
+      off:{pyat:'s',magnit:'p',perekr:'s',lenta:'s',vkus:'n',azbuka:'p',horeca:'d',horecaNote:'миксер в барах'} },
+    { name: 'Lotte Milkis', tier: 'Tier C · Корея',
+      ozon:{s:'s',num:'1.8k',info:'122₽ · банка 0.25'}, wb:{s:'p',info:'есть'}, market:{s:'p',info:'есть'}, lavka:{s:'n'},
+      off:{pyat:'n',magnit:'n',perekr:'n',lenta:'n',vkus:'n',azbuka:'n',horeca:'n'} },
+];
+
+const icons = { d:'●', s:'●', p:'●', n:'·' };
+
+function renderOnlineRow(b) {
+    const tr = document.createElement('tr');
+    const td1 = document.createElement('td');
+    td1.className = 'brand-cell';
+    td1.appendChild(el('div', null, b.name));
+    td1.appendChild(el('div', 'brand-tier', b.tier));
+    tr.appendChild(td1);
+
+    ['ozon', 'wb', 'market', 'lavka'].forEach(function(key) {
+        const cell = b[key] || { s: 'n' };
+        const td = document.createElement('td');
+        td.className = 'cell ' + cell.s;
+        const dot = el('span', 'dot');
+        const num = el('span', 'num', cell.num || (cell.s === 'n' ? 'нет' : ''));
+        const topLine = el('div');
+        topLine.appendChild(dot);
+        topLine.appendChild(num);
+        td.appendChild(topLine);
+        if (cell.info) td.appendChild(el('div', 'info', cell.info));
+        tr.appendChild(td);
+    });
+    return tr;
+}
+
+function renderOfflineRow(b) {
+    const tr = document.createElement('tr');
+    const td1 = document.createElement('td');
+    td1.className = 'brand-cell';
+    td1.appendChild(el('div', null, b.name));
+    td1.appendChild(el('div', 'brand-tier', b.tier));
+    tr.appendChild(td1);
+
+    ['pyat', 'magnit', 'perekr', 'lenta', 'vkus', 'azbuka', 'horeca'].forEach(function(key) {
+        const s = (b.off && b.off[key]) || 'n';
+        const note = b.off && b.off[key + 'Note'];
+        const td = el('td', 'dot-cell ' + s, icons[s]);
+        if (note) {
+            const noteEl = el('span', 'dc-note', note);
+            td.appendChild(noteEl);
+        }
+        tr.appendChild(td);
+    });
+    return tr;
+}
+
+const mtOnlineBody = document.getElementById('mtOnlineBody');
+const mtOfflineBody = document.getElementById('mtOfflineBody');
+if (mtOnlineBody && mtOfflineBody) {
+    matrixBrands.forEach(function(b) {
+        mtOnlineBody.appendChild(renderOnlineRow(b));
+        mtOfflineBody.appendChild(renderOfflineRow(b));
+    });
+}
+
+// Tab switcher
+document.querySelectorAll('.mt-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.mt-tab').forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        const view = tab.dataset.view;
+        document.getElementById('mtOnlineView').style.display = view === 'online' ? '' : 'none';
+        document.getElementById('mtOfflineView').style.display = view === 'offline' ? '' : 'none';
+    });
+});
+
+// ===== ГДЕ ФИЛЛС МОЖЕТ БЫТЬ #1 =====
+const verdicts = [
+    { channel: 'Я.Лавка крафт', current: 'Lemonardo + 3 бренда, всего 4', verdict: 'ДА', cls: 'yes' },
+    { channel: 'Магнит крафт', current: 'Никто из крафта', verdict: 'ДА', cls: 'yes' },
+    { channel: 'WB 65-90₽ крафт', current: 'Bombbar 102₽ (функц.), Fresh Bar 62₽ (масс)', verdict: 'ДА', cls: 'yes' },
+    { channel: 'Ozon крафт · MIX-наборы', current: 'Lapochka MIX 20 — 15k отзывов · 133₽/шт.', verdict: 'СЛОЖНО', cls: 'maybe' },
+    { channel: 'HoReCa бары МО', current: 'Никто', verdict: 'ДА', cls: 'yes' },
+    { channel: 'Подмосковный совр. крафт', current: 'Никто (Калиновъ из Дмитрова — ретро)', verdict: 'ДА', cls: 'yes' },
+];
+const verdictList = document.getElementById('verdictList');
+if (verdictList) {
+    verdicts.forEach(function(v) {
+        const row = el('div', 'verdict-row');
+        row.appendChild(el('div', 'v-channel', v.channel));
+        row.appendChild(el('div', 'v-current', v.current));
+        row.appendChild(el('div', 'v-verdict ' + v.cls, v.verdict));
+        verdictList.appendChild(row);
+    });
+}
 </script>
 
 </body>

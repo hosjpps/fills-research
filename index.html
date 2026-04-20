@@ -2002,15 +2002,187 @@
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
+            .nav-inner { padding: 0 1rem; }
+
+            /* HERO */
+            .hero { min-height: auto; padding: 5rem 1.25rem 3rem; }
+            .hero h1 { letter-spacing: 4px; }
             .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .cans-showcase { grid-template-columns: repeat(2, 1fr); }
+            .hero-stat-value { font-size: 1.5rem; }
+
+            /* BIG QUOTE */
+            .big-quote { padding: 2.5rem 1.25rem; }
+            .big-quote blockquote { font-size: 1.1rem; line-height: 1.45; }
+
+            /* SECTIONS / PADDING */
+            .section { padding: 3.5rem 1rem; }
+            .section-header { margin-bottom: 2.5rem; }
+            .positioning-section { padding: 1.5rem 1.25rem !important; border-radius: 16px; }
+
+            /* GRIDS — force 1 col everywhere */
+            .market-grid { grid-template-columns: 1fr; }
             .competitors-grid { grid-template-columns: 1fr; }
             .gaps-grid, .design-grid, .reg-grid { grid-template-columns: 1fr; }
+            .sku-grid { grid-template-columns: 1fr; }
             .photo-grid { grid-template-columns: 1fr; }
             .photo-placeholder.hero-photo { grid-column: span 1; }
-            .price-segment { grid-template-columns: 100px 1fr; }
-            .price-segment-brands { display: none; }
-            .section { padding: 4rem 1.25rem; }
+            .trends-grid { grid-template-columns: 1fr; }
+            .wave-grid { grid-template-columns: 1fr; }
+            .ad-grid { grid-template-columns: 1fr; }
+            .holdings-grid { grid-template-columns: 1fr; }
+            .economics-breakdown { grid-template-columns: 1fr; }
+            .mp-charts-row, .tier-chart-row { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+            .cans-showcase { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .channels-timeline { grid-template-columns: 1fr; gap: 1rem; }
+
+            /* CANS */
+            .can-flavor-name { font-size: 0.85rem; }
+            .can-emotion { font-size: 0.7rem; }
+
+            /* PRICE SEGMENTS */
+            .price-segment { grid-template-columns: 1fr; gap: 0.5rem; padding: 0.85rem 1rem; }
+            .price-segment-brands { display: block; font-size: 0.75rem; }
+            .price-bar-wrapper { height: 6px; }
+
+            /* MP STATS — 2 cols */
+            .mp-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .mp-stat { padding: 1rem; }
+            .mp-stat-val { font-size: 1.8rem; }
+            .mp-stat-lbl { font-size: 0.7rem; }
+
+            /* LAVKA SPOTLIGHT */
+            .lavka-spotlight { padding: 1.5rem; margin: 2rem 0; }
+            .lavka-spotlight h3 { font-size: 1.15rem; line-height: 1.3; }
+            .lavka-spotlight .sub { font-size: 0.85rem; }
+            .lavka-cards { grid-template-columns: 1fr; gap: 0.6rem; }
+            .lavka-card { padding: 1rem; }
+
+            /* PRICE CHAIN — stack */
+            .pflow, .price-chain { flex-direction: column; gap: 0.5rem; }
+            .pflow .pf-arr, .price-chain-arrow { transform: rotate(90deg); padding: 0.2rem 0; }
+            .pf-step, .price-chain-step { min-width: 200px; width: 100%; max-width: 300px; }
+
+            /* TIMELINE */
+            .timeline { padding-left: 2rem; max-width: 100%; }
+            .timeline-dot { left: -2rem; }
+
+            /* COMPETITOR CARDS */
+            .comp-grid-v2 { grid-template-columns: 1fr; gap: 0.75rem; }
+            .comp-card-v2 { padding: 1.25rem; }
+            .comp-name-v2 { font-size: 1rem; }
+
+            /* TIER FILTER CHIPS — smaller */
+            .tier-chip { padding: 0.4rem 0.8rem; font-size: 0.78rem; }
+            .tier-chip .cnt { font-size: 0.65rem; padding: 0.1rem 0.4rem; }
+
+            /* CHANNEL RANK */
+            .channel-rank { grid-template-columns: 1fr; }
+            .channel-rank-item { grid-template-columns: 30px 1fr auto; padding: 0.7rem 0.9rem; gap: 0.5rem; }
+            .channel-rank-name { font-size: 0.85rem; }
+            .channel-rank-sub { font-size: 0.68rem; }
+            .channel-rank-prio { font-size: 0.65rem; padding: 0.15rem 0.4rem; }
+
+            /* INSIGHTS STRIP — smaller cards */
+            .insights-strip { grid-auto-columns: 260px; }
+            .insight-chip { padding: 1rem; }
+            .insight-chip p { font-size: 0.78rem; }
+
+            /* CONFLICTS */
+            .conflicts-wrap { padding: 1.25rem; margin: 1.5rem 0; }
+            .conflicts-head h3 { font-size: 1.05rem; }
+            .conflicts-wrap > p { font-size: 0.82rem; }
+            .conflict-row { grid-template-columns: 1fr; gap: 0.4rem; padding: 0.8rem 1rem; }
+            .conflict-row .brand-pill { font-size: 0.75rem; }
+
+            /* HOLDINGS */
+            .holding-card { padding: 1.15rem; }
+            .holding-card h4 { font-size: 0.92rem; }
+            .holding-card p { font-size: 0.78rem; }
+
+            /* MATRIX TABS */
+            .mt-tabs { width: 100%; justify-content: space-between; border-radius: 12px; padding: 3px; }
+            .mt-tab { padding: 0.5rem 0.7rem; font-size: 0.72rem; flex: 1; border-radius: 9px; }
+
+            /* Table cells — tighten */
+            .mt-table th, .mt-table td { padding: 0.55rem 0.65rem; }
+            .mt-table th { font-size: 0.62rem; letter-spacing: 0.5px; }
+            .mt-table .brand-cell { font-size: 0.8rem; min-width: 130px; }
+            .mt-online .cell .num { font-size: 0.82rem; }
+            .mt-online .cell .info { font-size: 0.65rem; }
+            .mt-offline .dot-cell { min-width: 45px; font-size: 0.85rem; }
+            .mt-offline .dot-cell .dc-note { font-size: 0.55rem; }
+
+            /* VERDICT rows */
+            .verdict-row { grid-template-columns: 1fr; gap: 0.35rem; padding: 0.8rem 1rem; }
+            .verdict-row .v-verdict { justify-self: start; }
+
+            /* MODAL */
+            .modal-backdrop { padding: 1rem 0.5rem; }
+            .modal-box { padding: 2rem 1.25rem; border-radius: 16px; }
+            .modal-title { font-size: 1.3rem; padding-right: 2.5rem; }
+            .modal-meta { font-size: 0.78rem; margin-bottom: 1.25rem; padding-bottom: 1rem; }
+            .modal-section { margin-bottom: 1.1rem; }
+            .modal-section h4 { font-size: 0.68rem; }
+            .modal-section p, .modal-section li { font-size: 0.85rem; }
+            .modal-threat, .modal-strategy { padding: 0.85rem 1rem; }
+
+            /* CHECKLIST */
+            .checklist { grid-template-columns: 1fr; }
+            .checklist-item { padding: 0.85rem 1rem; font-size: 0.85rem; }
+
+            /* OZON rows — compact */
+            .ozon-row { grid-template-columns: 28px 1fr 80px; gap: 0.5rem; padding: 0.65rem 0.85rem; }
+            .ozon-price, .ozon-rating { display: none; }
+            .ozon-brand { font-size: 0.88rem; }
+            .ozon-brand-sku { font-size: 0.7rem; }
+            .ozon-reviews { font-size: 0.85rem; }
+
+            /* SYNERGY */
+            .synergy-grid { grid-template-columns: 1fr; }
+
+            /* CHANNEL PHASE */
+            .channel-phase { padding: 1.25rem; }
+            .channel-phase-header { flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+            .channel-phase-title { font-size: 1rem; }
+            .channel-list { grid-template-columns: 1fr; }
+
+            /* REG items */
+            .reg-item { padding: 1rem; }
+            .reg-item h4 { font-size: 0.85rem; }
+            .reg-item p { font-size: 0.75rem; }
+
+            /* SECTION TITLES */
+            .section-title { font-size: 1.7rem; line-height: 1.2; }
+            .section-desc { font-size: 0.9rem; }
+            .section-tag { font-size: 0.68rem; letter-spacing: 1.5px; }
+
+            /* DATA TABLE */
+            .data-table th, .data-table td { padding: 0.7rem 0.8rem; font-size: 0.78rem; }
+
+            /* MATRIX LEGEND */
+            .matrix-legend { gap: 0.75rem; font-size: 0.7rem; }
+            .matrix-legend-item { flex: 0 0 auto; }
+
+            /* FOOTER */
+            .footer { padding: 2.5rem 1rem; }
+            .footer-brand { font-size: 1.5rem; }
+            .footer-tagline { font-size: 0.8rem; }
+
+            /* CONCLUSION */
+            .positioning-section[style*="padding: 4rem 3rem"] { padding: 2rem 1.25rem !important; }
+        }
+
+        @media (max-width: 480px) {
+            /* Ultra-small screens */
+            .cans-showcase { grid-template-columns: 1fr; }
+            .mp-stats { grid-template-columns: 1fr; }
+            .insights-strip { grid-auto-columns: 230px; }
+            .hero-stats { grid-template-columns: 1fr; }
+            .tier-filters { gap: 0.35rem; }
+            .tier-chip { padding: 0.35rem 0.6rem; font-size: 0.7rem; }
+            .hero h1 { letter-spacing: 3px; }
+            .section-title { font-size: 1.4rem; }
+            .big-quote blockquote { font-size: 1rem; }
         }
     </style>
 </head>

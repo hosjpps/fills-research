@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>ЛЫТКАРИНЪ — визитки (4 варианта)</title>
+<style>
+  :root {
+    --green-dark: #1a4d2e;
+    --green-medium: #2d5a3d;
+    --green-light: #3d6e4e;
+    --gold: #d4a574;
+    --gold-deep: #c09560;
+    --copper: #b87333;
+    --cream: #f8f6f0;
+    --off-black: #1a1a1a;
+    --paper: #fafaf8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Helvetica Neue', 'Inter', system-ui, sans-serif;
+    background: #d8dde0;
+    padding: 60px 40px;
+    color: #222;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--green-dark);
+  }
+  .sub {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 50px;
+    max-width: 760px;
+    line-height: 1.5;
+  }
+  .variant { margin-bottom: 80px; }
+  .variant-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--green-dark);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .variant-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .variant-desc {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 24px;
+    max-width: 640px;
+    line-height: 1.55;
+  }
+  .pair { display: flex; gap: 30px; flex-wrap: wrap; }
+
+  /* Стандарт RU/EU 85×55 мм @ 6px/mm */
+  .card {
+    width: 510px;
+    height: 330px;
+    border-radius: 6px;
+    box-shadow: 0 12px 36px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.08);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', 'Inter', system-ui, sans-serif;
+  }
+
+  /* Реальный логотип, круглая обрезка чтобы убрать чёрный квадрат фона */
+  .real-logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: circle(48% at 50% 50%);
+  }
+  .logo-wrap {
+    border-radius: 50%;
+    overflow: hidden;
+    background: #000; /* совпадает с фоном лого, на случай если clip-path не сработает */
+    flex-shrink: 0;
+  }
+
+  /* ──────────── ВАРИАНТ 1: Тёмно-зелёный с чёрным «медальоном» ──────────── */
+  .v1-front {
+    background: var(--green-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+  }
+  .v1-front::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(212,165,116,.25);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .v1-front .logo-wrap {
+    width: 240px; height: 240px;
+    box-shadow: 0 0 0 2px rgba(212,165,116,.4), 0 8px 24px rgba(0,0,0,.4);
+  }
+
+  .v1-back {
+    background: var(--green-dark);
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .v1-back::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(212,165,116,.25);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .v1-back .name {
+    color: var(--gold);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
+  }
+  .v1-back .role {
+    color: rgba(255,255,255,.85);
+    font-size: 12px;
+    margin-top: 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .v1-back .gold-line {
+    width: 50px;
+    height: 1px;
+    background: var(--gold);
+    margin: 14px 0 16px;
+  }
+  .v1-back .contacts {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 18px;
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .v1-back .contacts .lbl {
+    color: var(--gold);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    align-self: center;
+    font-weight: 600;
+  }
+  .v1-back .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: rgba(212,165,116,.7);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* ──────────── ВАРИАНТ 2: Кремовый с зелёным углом + лого как печать ──────────── */
+  .v2-front {
+    background: var(--cream);
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .v2-front::before {
+    content: '';
+    position: absolute;
+    top: -10px; right: -10px;
+    width: 240px; height: 240px;
+    background: var(--green-dark);
+    transform: rotate(45deg);
+    transform-origin: top right;
+  }
+  .v2-front .top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+  }
+  .v2-front .lockup {
+    color: var(--green-dark);
+  }
+  .v2-front .brand-big {
+    font-weight: 800;
+    font-size: 38px;
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+  .v2-front .since {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--gold-deep);
+    margin-top: 8px;
+    letter-spacing: 1.5px;
+  }
+  .v2-front .logo-wrap {
+    width: 110px; height: 110px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    z-index: 2;
+  }
+  .v2-front .bottom {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .v2-front .descr {
+    color: var(--off-black);
+    font-size: 10.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    line-height: 1.7;
+    max-width: 240px;
+  }
+  .v2-front .descr strong {
+    color: var(--green-dark);
+  }
+  .v2-front .city {
+    color: rgba(255,255,255,.9);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .v2-back {
+    background: var(--cream);
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 6px solid var(--green-dark);
+  }
+  .v2-back .name {
+    color: var(--green-dark);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  .v2-back .role {
+    color: var(--gold-deep);
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .v2-back .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 16px 0;
+  }
+  .v2-back .contacts {
+    color: var(--off-black);
+    font-size: 13px;
+    line-height: 1.85;
+  }
+  .v2-back .contacts .key {
+    color: var(--green-dark);
+    font-weight: 600;
+    display: inline-block;
+    width: 92px;
+  }
+
+  /* ──────────── ВАРИАНТ 3: Минимализм — лого в углу, много воздуха ──────────── */
+  .v3-front {
+    background: var(--paper);
+    padding: 36px 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .v3-front .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .v3-front .logo-wrap {
+    width: 64px; height: 64px;
+  }
+  .v3-front .brand-text {
+    color: var(--green-dark);
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: 4px;
+  }
+  .v3-front .brand-sub {
+    color: var(--gold-deep);
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 12px;
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+  .v3-front .tagline {
+    color: var(--off-black);
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 380px;
+    font-family: 'Georgia', serif;
+  }
+  .v3-front .tagline em {
+    color: var(--green-dark);
+    font-style: italic;
+    font-weight: 600;
+  }
+  .v3-front .bot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: #888;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .v3-front .bot-row span {
+    color: var(--gold-deep);
+    font-weight: 700;
+  }
+
+  .v3-back {
+    background: var(--paper);
+    padding: 36px 38px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .v3-back::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--green-dark) 0%, var(--gold) 50%, var(--green-dark) 100%);
+  }
+  .v3-back .name {
+    color: var(--off-black);
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .v3-back .role {
+    color: var(--green-dark);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 8px;
+  }
+  .v3-back .contacts {
+    font-size: 13px;
+    color: #333;
+    line-height: 2;
+  }
+  .v3-back .contacts .ico {
+    display: inline-block;
+    width: 22px;
+    color: var(--gold-deep);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* ──────────── ВАРИАНТ 4: Печать сверху, контакты снизу ──────────── */
+  .v4-front {
+    background: var(--green-dark);
+    padding: 0;
+    position: relative;
+  }
+  .v4-front .top-half {
+    height: 62%;
+    background: var(--green-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .v4-front .top-half::before {
+    content: '';
+    position: absolute;
+    inset: 12px 12px 0 12px;
+    border: 1px solid rgba(212,165,116,.3);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    pointer-events: none;
+  }
+  .v4-front .logo-wrap {
+    width: 170px; height: 170px;
+    box-shadow: 0 0 0 2px rgba(212,165,116,.5), 0 6px 20px rgba(0,0,0,.4);
+  }
+  .v4-front .bottom-half {
+    height: 38%;
+    background: var(--cream);
+    padding: 18px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 3px solid var(--gold);
+  }
+  .v4-front .brand-mark {
+    color: var(--green-dark);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 4px;
+  }
+  .v4-front .meta {
+    text-align: right;
+    color: var(--gold-deep);
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .v4-back {
+    background: var(--cream);
+    padding: 36px 38px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .v4-back .name-block {
+    border-left: 4px solid var(--gold);
+    padding-left: 18px;
+    margin-bottom: 24px;
+  }
+  .v4-back .name {
+    color: var(--green-dark);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .v4-back .role {
+    color: var(--off-black);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 6px;
+    opacity: 0.7;
+  }
+  .v4-back .contacts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 24px;
+    font-size: 12px;
+    color: var(--off-black);
+  }
+  .v4-back .contact-item .label {
+    color: var(--green-dark);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .v4-back .contact-item .value {
+    font-size: 13px;
+    font-weight: 500;
+    word-break: break-word;
+  }
+  .v4-back .footer {
+    margin-top: auto;
+    border-top: 1px solid rgba(0,0,0,.1);
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .face-label {
+    font-size: 10px;
+    color: #888;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .face { display: flex; flex-direction: column; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    h1, .sub, .variant-label, .variant-title, .variant-desc, .face-label { display: none; }
+    .variant { page-break-after: always; }
+    .card { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<h1>ЛЫТКАРИНЪ — визитки, 4 варианта</h1>
+<p class="sub">
+  Использован настоящий логотип с сайта (<code>logo_lytkarin.png</code>). Пример на одной персоне (Карманова К.И.).
+  Формат: 85×55 мм (стандарт РФ/ЕС). Цвета: тёмно-зелёный <code>#1a4d2e</code>, золотой <code>#d4a574</code>, кремовый <code>#f8f6f0</code>.
+  Слева — лицевая, справа — оборот.
+</p>
+
+<!-- ───────────── ВАРИАНТ 1 ───────────── -->
+<div class="variant">
+  <div class="variant-label">Вариант 1</div>
+  <div class="variant-title">Классика — тёмно-зелёный медальон</div>
+  <div class="variant-desc">Прямая параллель к референсу БРЮПРОМТ: монолитный тёмно-зелёный фон, лого как «медальон» с золотым кантом, тонкая золотая внутренняя рамка. Самый солидный/корпоративный вариант. Работает для топ-менеджмента.</div>
+
+  <div class="pair">
+    <div class="face">
+      <div class="face-label">Лицевая</div>
+      <div class="card v1-front">
+        <div class="logo-wrap">
+          <img class="real-logo" src="logo_lytkarin.png" alt="ЛЫТКАРИНЪ">
+        </div>
+      </div>
+    </div>
+    <div class="face">
+      <div class="face-label">Оборот</div>
+      <div class="card v1-back">
+        <div>
+          <div class="name">Карманова<br>Кира Ивановна</div>
+          <div class="role">Руководитель производства</div>
+          <div class="gold-line"></div>
+        </div>
+        <div class="contacts">
+          <div class="lbl">Тел</div><div>+7 (912) 149-96-18</div>
+          <div class="lbl">Email</div><div>k.karmanova@lytkarin.ru</div>
+          <div class="lbl">Telegram</div><div>@kira_lvanovna</div>
+        </div>
+        <div class="footer-row">
+          <div>Лыткарино · Россия</div>
+          <div>Est. 2012</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────── ВАРИАНТ 2 ───────────── -->
+<div class="variant">
+  <div class="variant-label">Вариант 2</div>
+  <div class="variant-title">Премиум — кремовый с зелёным углом</div>
+  <div class="variant-desc">Светлый бумажный фон (как у крафтовых пивоварен в премиум-сегменте), диагональный зелёный угол, лого — как восковая печать. Намёк на «крафт + наследие». Самый «подарочный» вид, хорошо смотрится в портмоне клиента.</div>
+
+  <div class="pair">
+    <div class="face">
+      <div class="face-label">Лицевая</div>
+      <div class="card v2-front">
+        <div class="top">
+          <div class="lockup">
+            <div class="brand-big">ЛЫТКАРИНЪ</div>
+            <div class="since">Крафтовая мануфактура · с 2012</div>
+          </div>
+          <div class="logo-wrap">
+            <img class="real-logo" src="logo_lytkarin.png" alt="ЛЫТКАРИНЪ">
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="descr">
+            <strong>Натуральное</strong><br>пивоварение<br>· Подмосковье ·
+          </div>
+          <div class="city">Лыткарино<br>Россия</div>
+        </div>
+      </div>
+    </div>
+    <div class="face">
+      <div class="face-label">Оборот</div>
+      <div class="card v2-back">
+        <div>
+          <div class="name">Карманова<br>Кира Ивановна</div>
+          <div class="role">Руководитель производства</div>
+          <div class="divider"></div>
+        </div>
+        <div class="contacts">
+          <div><span class="key">Телефон</span>+7 (912) 149-96-18</div>
+          <div><span class="key">Email</span>k.karmanova@lytkarin.ru</div>
+          <div><span class="key">Telegram</span>@kira_lvanovna</div>
+          <div><span class="key">Сайт</span>lytkarin.ru</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────── ВАРИАНТ 3 ───────────── -->
+<div class="variant">
+  <div class="variant-label">Вариант 3</div>
+  <div class="variant-title">Минимализм — лого + слоган</div>
+  <div class="variant-desc">Бумажный фон, маленький лого вверху, акцент на тексте/слогане. «Редакторский», чистый стиль. Хорошо подходит технологам, маркетологам, креативному составу. Тонкий золото-зелёный градиент-полоса внизу оборотной стороны.</div>
+
+  <div class="pair">
+    <div class="face">
+      <div class="face-label">Лицевая</div>
+      <div class="card v3-front">
+        <div class="brand-row">
+          <div class="logo-wrap">
+            <img class="real-logo" src="logo_lytkarin.png" alt="ЛЫТКАРИНЪ">
+          </div>
+          <div>
+            <div class="brand-text">ЛЫТКАРИНЪ</div>
+            <div class="brand-sub">Крафтовая мануфактура</div>
+          </div>
+        </div>
+        <div class="tagline">
+          <em>«Натуральное пиво и&nbsp;лимонады,</em><br>
+          сваренные в&nbsp;Лыткарино,<br>
+          Подмосковье»
+        </div>
+        <div class="bot-row">
+          <div>EST. <span>2012</span></div>
+          <div>lytkarin.ru</div>
+        </div>
+      </div>
+    </div>
+    <div class="face">
+      <div class="face-label">Оборот</div>
+      <div class="card v3-back">
+        <div>
+          <div class="name">Карманова<br>Кира Ивановна</div>
+          <div class="role">Руководитель производства</div>
+        </div>
+        <div class="contacts">
+          <div><span class="ico">·</span> +7 (912) 149-96-18</div>
+          <div><span class="ico">·</span> k.karmanova@lytkarin.ru</div>
+          <div><span class="ico">·</span> Telegram &nbsp;@kira_lvanovna</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────── ВАРИАНТ 4 ───────────── -->
+<div class="variant">
+  <div class="variant-label">Вариант 4</div>
+  <div class="variant-title">Современный — печать сверху, контакты внизу</div>
+  <div class="variant-desc">Двухчастная композиция: тёмно-зелёная половина с большим лого-печатью наверху, кремовая полоса с брендом-городом внизу. Обратная сторона — контакты в две колонки по «слотам», очень удобно сканируется.</div>
+
+  <div class="pair">
+    <div class="face">
+      <div class="face-label">Лицевая</div>
+      <div class="card v4-front">
+        <div class="top-half">
+          <div class="logo-wrap">
+            <img class="real-logo" src="logo_lytkarin.png" alt="ЛЫТКАРИНЪ">
+          </div>
+        </div>
+        <div class="bottom-half">
+          <div class="brand-mark">ЛЫТКАРИНЪ</div>
+          <div class="meta">Крафтовая мануфактура<br>Лыткарино · с 2012</div>
+        </div>
+      </div>
+    </div>
+    <div class="face">
+      <div class="face-label">Оборот</div>
+      <div class="card v4-back">
+        <div class="name-block">
+          <div class="name">Карманова Кира Ивановна</div>
+          <div class="role">Руководитель производства</div>
+        </div>
+        <div class="contacts">
+          <div class="contact-item">
+            <div class="label">Телефон</div>
+            <div class="value">+7 (912) 149-96-18</div>
+          </div>
+          <div class="contact-item">
+            <div class="label">Telegram</div>
+            <div class="value">@kira_lvanovna</div>
+          </div>
+          <div class="contact-item">
+            <div class="label">Email</div>
+            <div class="value">k.karmanova@lytkarin.ru</div>
+          </div>
+          <div class="contact-item">
+            <div class="label">Сайт</div>
+            <div class="value">lytkarin.ru</div>
+          </div>
+        </div>
+        <div class="footer">
+          <div>ЛЫТКАРИНЪ</div>
+          <div>Лыткарино · Россия</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
